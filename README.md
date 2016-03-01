@@ -50,8 +50,7 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 <a name="Introduction"></a>
 ##Introduction
 
-The Freestyle Architecture is easy to understand and to maintain Software Architecture. 
-It consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. Each layer contained in a folder.
+The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. Each layer contained in a folder.
 
 
 
@@ -393,7 +392,7 @@ return $this->response->paginator($users, new UserTransformer());
 
 The `Input` has two main roles, firts to automatically validate the data against the defined rules and second to serve the data anywhere in the App.
 <br/>
-It's highly recommended to follow this pattern to transfer the application input data across the application code, to ensure the data is valid and never lost.
+It's highly recommended to follow this pattern to transfer the user input data across the application components, to ensure the data is valid and never lost.
 <br/>
 Every `Input` MUST have `rules` and `get` functions, both returning Arrays.
 
@@ -512,7 +511,13 @@ class OrderByCreationDateDescendingCriteria extends Criteria
 **Criteria usage:**
 
 ```php
-$userRepository->pushCriteria(new OrderByCreationDateDescendingCriteria);
+public function handle(UserRepositoryInterface $userRepository)
+{
+	 // apply the OrderByCreationDateDescending Criteria to the query
+    $userRepository->pushCriteria(new OrderByCreationDateDescendingCriteria);
+
+    return $userRepository->paginate(10);
+}
 ```
 
 <br/>
@@ -547,11 +552,7 @@ class AuthenticationFailedException extends ApiException
 throw new AuthenticationFailedException();
 ```
 
-You can override the $message property
-
-```php
-throw new AuthenticationFailedException('I am the error details');
-```
+You can override the `$message property`
 
 ```php
 try {
@@ -566,11 +567,13 @@ try {
 <a name="Tests"></a>
 ###Tests
 
-The main types of `Tests` recommended by this Architecture are Unit and Functional. (but you can write any other type of Tests such as Integration and Acceptance if you want).
+The very essential `Tests` types are Unit Tests and Functional Tests . (additional `Tests` types are Integration Tests and Acceptance Tests).
 
-Unit Tests SHOULD be in the `Modules` layer (each `Module` has it's own `Tests`). 
+The `Interface` can have Functional `Tests`, (Example testing the `Routes` are doing what's expected from them).
 <br/>
-And Functional Tests SHOULD be in the `Interfaces` layer (each `Interface` has it's own `Tests`).
+The `Module` can have Unit `Tests`, (Example testing the `Command` it's doing it's job).
+
+
 
 
 Functional `Test` code samples:
