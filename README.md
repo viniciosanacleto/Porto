@@ -7,6 +7,8 @@ It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-Vie
 
 The Freestyle Architecture was designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Web Applications.
 
+![](http://s11.postimg.org/ay107nxlv/contemporary_paintings.jpg)
+
 **Quality Attributes: (Advantages)**
 
 - Reusable Code (Modules of Business Logic).
