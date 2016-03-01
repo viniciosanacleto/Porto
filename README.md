@@ -41,7 +41,7 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 	- [Criterias](#Criterias)
 	- [Exceptions](#Exceptions)
 	- [Tests](#Tests)
-
+- [Code Sample](#Code-Sample)
 
 
 
@@ -650,9 +650,16 @@ Test Function:
 
 
 
-<br/>
 
-___
+
+
+<br/>
+<a name="Code-Sample"></a>
+##Code Sample
+
+Comming Soon..
+
+
 
 
 
