@@ -142,6 +142,10 @@ The Request life cycle:
 
 
 
+###Folders Structure
+
+![](http://s24.postimg.org/rmy7xyhdx/freestyle_architecture_folders_structure.png)
+
 
 
 
