@@ -138,7 +138,7 @@ The Request life cycle:
 <a name="Layers-and-Components-Diagram"></a>
 ###Layers and Components Diagram
 
-![](/Users/mz/Desktop/xyz_architecture.png)
+![](http://s28.postimg.org/hv3ercpwt/freestyle_architecture.png)
 
 
 
@@ -641,9 +641,9 @@ ___
 
 
 
-## Support & Contribution
-Your support is needed. And your contribution is more than welcome. 
-Let's help Developers write better code. And make the Developers life easier.
+## Help us improve!
+Let's help Developers write better code. For an easier Developers life :)
+
 
 ## Credits
 
