@@ -5,7 +5,7 @@
 The Freestyle Architecture is a clean and easy to understand Software Architecture. 
 It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-View-Controller Architecture.
 
-The Freestyle Architecture was designed to be Modular, Agile and Easy to understand; to enable Developers to build Scalable, Maintainable and Reusable Web Applications.
+The Freestyle Architecture was designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Web Applications.
 
 **Quality Attributes: (Advantages)**
 
@@ -18,7 +18,7 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 - Easy Framework Upgrade (Decoupled application code from the framework code).
 - Zero Code Decoupling.
 
->Business guys do not care about Code, you are the only one who care about it. So let the Code work for you, don't work for it.
+>Business guys do not care about Code, you are the only one who care about it. So let the Code work for you, don't work for it!
 
 ##Content
 
@@ -44,7 +44,7 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 
 
 
-<br/>
+
 <a name="Introduction"></a>
 ##Introduction
 
@@ -150,6 +150,8 @@ The Request life cycle:
 <br/>
 <a name="Components"></a>
 ##Components
+
+Each `Layer` in the Freestyle Architecture consist of multiple `Components`.
 
 
 <br/>
@@ -381,8 +383,10 @@ return $this->response->paginator($users, new UserTransformer());
 <a name="Inputs"></a>
 ###Inputs
 
-`Inputs` are a great way to transfer the Request Data between the different components and automatically apply the Validation rules.
+`Inputs` are a great way to transfer the user input Data between the different components and automatically apply the Validation rules.
 
+The `Input` has two main roles, firts to automatically validate the data against the defined rules and second to serve the data anywhere in the App.
+<br/>
 It's highly recommended to follow this pattern to transfer the application input data across the application code, to ensure the data is valid and never lost.
 <br/>
 Every `Input` MUST have `rules` and `get` functions, both returning Arrays.
@@ -556,9 +560,12 @@ try {
 <a name="Tests"></a>
 ###Tests
 
-`Tests` can be Unit, Functional or even Acceptance.
+The main types of `Tests` recommended by this Architecture are Unit and Functional. (but you can write any other type of Tests such as Integration and Acceptance if you want).
 
-Unit Tests SHOULD be in the `Modules` layer. While Functional Tests SHOULD be in the `Interfaces` layer
+Unit Tests SHOULD be in the `Modules` layer (each `Module` has it's own `Tests`). 
+<br/>
+And Functional Tests SHOULD be in the `Interfaces` layer (each `Interface` has it's own `Tests`).
+
 
 Functional `Test` code samples:
 
@@ -591,7 +598,7 @@ class LoginEndpointTest extends TestCase
 }
 ```
 
-Another Test:
+Test Function:
 
 ```php
 	// ...
@@ -626,7 +633,7 @@ Another Test:
     }
 ```
 
-**Useful Tests Functions:** (available in all your `Tests` and provided by the `Mega\Infrastructure\Traits\TestingTrait`)
+**Useful Tests Functions:** (available in all your `Tests`)
 
 - ```assertResponseContainKeys($keys, $response)```
 - ```assertResponseContainValues($values, $response)```
@@ -651,7 +658,7 @@ Let's help Developers write better code. For an easier Developers life :)
 - [All Contributors](../../contributors)
 
 ## License
-**MIT**
+MIT
 
 
 
