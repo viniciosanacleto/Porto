@@ -2,12 +2,16 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)](http://www.zalt.me)
 
+<MEGA-PRO-----------------------------------------------------------MEGA-PRO>
+
 The Freestyle Architecture is a clean and easy to understand Software Architecture. 
 It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-View-Controller Architecture.
 
 The Freestyle Architecture was designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Web Applications.
 
-![](http://s11.postimg.org/ay107nxlv/contemporary_paintings.jpg)
+<MEGA-PRO-----------------------------------------------------------MEGA-PRO>
+
+<br>
 
 **Quality Attributes: (Advantages)**
 
@@ -20,16 +24,24 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 - Easy Framework Upgrade (Decoupled application code from the framework code).
 - Zero Code Decoupling.
 
+<br>
+
 >Business guys do not care about Code, you are the only one who care about it. So let the Code work for you, don't work for it!
 
+
+![](http://s11.postimg.org/ay107nxlv/contemporary_paintings.jpg)
+
+
 ##Content
+
+<MEGA-PRO-----------------------------------------------------------MEGA-PRO>
 
 - [Introduction](#Introduction)
 	- [Interfaces](#Interfaces)
 	- [Modules](#Modules)
 	- [Infrastructure](#Infrastructure)
+- [Layers Diagram](#Layers-Diagram)
 - [How it works](#How-it-works)
-	- [Layers and Components Diagram](#Layers-and-Components-Diagram)
 - [Components](#Components)
 	- [Routes](#Routes)
 	- [Controllers](#Controllers)
@@ -41,6 +53,7 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 	- [Criterias](#Criterias)
 	- [Exceptions](#Exceptions)
 	- [Tests](#Tests)
+- [Folders-Structure](#Folders-Structure)
 - [Code Sample](#Code-Sample)
 
 
@@ -48,78 +61,83 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 
 
 <a name="Introduction"></a>
-##Introduction
+###Introduction
 
-The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. Each layer contained in a folder.
+The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. *(Each layer contained in a folder)*.
 
 
-
-<br/>
+<br>
 <a name="Interfaces"></a>
 ###Interfaces
 
 The **Interfaces** layer contains the public API's of the application.
 
 An `Interface` is what the user uses to access an application. 
-<br/>
+<br>
 It can be an `API` (responding to Endpoints calls), `CLI` (executing Commands) or anything else you prefer.
 
-However in the Freestyle Architecture we try our best to implement the latest modern coding practices. 
+However in the Freestyle Architecture we try our best to implement a modern coding practices. 
 Thus we recommend not making a `WEB` Interface that serves HTML Pages, instead build your `WEB` App with a JS Frameowrk like (AngularJS or ReactJS or...) and let your App request Data from your `API`.
 This way you don't have to change your code to support new devides in the future like (Mobile App, Tablets App or Desktop App) since all your Apps can use the same `API`. 
 And you can even allow other Apps to integrate with your App real quick, since you already have your `API` ready.
 
-The main components in Interfaces layer are `Routes` and `Controllers`.
-<br/>
-Optional components are `Transformers` and `Tests`.
+The main components of an `Interface` are `Routes` and `Controllers`.
+<br>
+Additional components can be `Transformers` and `Tests`.
 
 
 
-<br/>
+<br>
 <a name="Modules"></a>
 ###Modules
 
-The **Modules** layer contains the application specific business logic. 
+The **Modules** layer contains the Application specific business logic. *(Application functionalities)*.
 
-Each `Module` encapsulates a part of the application logic.
-<br/>
-The `Module` functionality is exposed via `Commands` and it's ONLY accessible via `Commands`.
-<br/>
-Every `Module` MUST contain at least one `Command`.
-<br/>
-`Modules` should not interact with each others directly, (the `Controllers` will control the interaction between the `Modules`).
-<br/>
-`Modules` can be reused across different projects.
+Each analogical business logic SHOULD be encapsulated insde a separate `Module`. *(All similar functionalities should be wrapped in a Module apart)*.
+<br>
+All the `Module` functionalities MUST be exposed via `Commands` and ONLY accessible via their `Commands`. *(W'll see what a Command is below)*.
+<br>
+Every `Module` MUST contain at least one `Command`. *(A Module can have one or many Commands)*.
+<br>
+`Modules` should not interact with each others directly, (the `Controllers` will control the interaction between `Modules`).
+<br>
+`Modules` can be reused across different projects. *(Think of them as third-party packages)*.
 
-The main components in Modules layer are `Commands` and `Models`. 
-<br/>
-Optional components are `Inputs`, `Exceptions`, `Repositories` and `Criterias`.
+The main components of a `Module` are `Commands` and `Models`. 
+<br>
+Additional components can be `Inputs`, `Exceptions`, `Repositories` and `Criterias`.
 
-In the `Modules` layer, you are free to add as many more components as you prefer: `Services`, `Adapters`, `Factories`, `ServiceProviders`, `Facades`,...
+In the `Module`, you are free to add much more components if you wish, like `Services`, `Adapters`, `Factories`, `ServiceProviders`, `Facades`,...
 
 
-<br/>
+<br>
 <a name="Infrastructure"></a>
 ###Infrastructure
 
-The **Infrastructure** layer is the glue between the `Components` and the Framework. 
+The **Infrastructure** layer is the glue between the `Components` and the Framework. *(In this example it's Laravel)*.
 
-The `Infrastructure` is what links everything with the framework (usually Infrastructure means the framework itself but in this case, it's the links to the framework).
-<br/>
+The `Infrastructure` is what links everything with the framework (usually Infrastructure means the framework itself but in this case, it's the links to a framework).
+<br>
 The `Infrastructure` contains the reusable code between the `Modules` themselves and the `Interfaces` themselves. 
-<br/>
-The `Infrastructure` separates the application code from the Framework code. (to easily upgrade the framework).
-<br/>
-Usually, no need to touch this layer (folder).
+<br>
+The `Infrastructure` separates the application code from the Framework code.
+<br>
+Usually, you don't have to touch this layer code. (Unless you see it's essential).
+
+One of the major roles that the `Infrastructure` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
+
+
+
+<br>
+<a name="Layers-Diagram"></a>
+###Layers Diagram
+
+![](http://s29.postimg.org/amlftwh13/freestyle_architecture.png)
 
 
 
 
-
-
-
-
-<br/>
+<br>
 <a name="How-it-works"></a>
 ##How it works
 
@@ -135,52 +153,37 @@ The Request life cycle:
 
 
 
-<br/>
-<a name="Layers-and-Components-Diagram"></a>
-###Layers and Components Diagram
 
-![](http://s28.postimg.org/hv3ercpwt/freestyle_architecture.png)
-
-
-
-###Folders Structure
-
-![](http://s24.postimg.org/rmy7xyhdx/freestyle_architecture_folders_structure.png)
-
-
-
-
-
-
-<br/>
+<br>
 <a name="Components"></a>
 ##Components
 
 Each `Layer` in the Freestyle Architecture consist of multiple `Components`.
 
+I will explain the role of each of the components and show you how to use them:
 
-<br/>
+<br>
 <a name="Routes"></a>
 ###Routes
 
 The `Routes` are the first receivers (ports) of the Request. (Same as Laravel's Routes)
 
 The `Route` main job is to call a particular `Controller` once a Request is made.
-<br/>
+<br>
 Each `Route` represent a single API Endpoint.
-<br/>
+<br>
 Each `Route` SHOULD have a dedicated `Controller` for it. 
-<br/>
+<br>
 A `Route` SHOULD only call the `handle` Function on it's `Controller`.
-<br/>
+<br>
 All the API `Routes` SHOULD be in the `src/backEnd/Interfaces/Api/Routes` folder.
-<br/>
+<br>
 Each Routes file represent a version of your API (example the default file is `Api.v1.php`) to add a new version edit the `map` function in `src/backEnd/Infrastructure/Providers/ApiRouteServiceProvider.php`.
 
 
 `Routes` code sample:
 
-Normal Endpoint:
+**Normal Endpoint:**
 
 ```php
 $router->post('login', [
@@ -188,7 +191,7 @@ $router->post('login', [
 ]);
 ```
 
-Protected Endpoint:
+**Protected Endpoint:**
 (User must login first before accessing this endpoint.)
 
 ```php
@@ -201,24 +204,24 @@ $router->get('users', [
 
 
 
-<br/>
+<br>
 <a name="Controllers"></a>
 ###Controllers
 
 `Controllers` are the same as in MVC, the only difference here is that a `Controller` can only respond to a single `Route`.
 
 `Controllers` act as the relation between the `Interfaces` layer and the `Modules` layer (by dispatching the `Modules` `Commands`).
-<br/>
+<br>
 The `Controller` has two main roles, first dispatching `Commands` and second building a Response.
-<br/>
+<br>
 `Controllers` SHOULD not have any form of business logic. (It dispatches `Commands` to perform a business logic).
-<br/>
+<br>
 A `Controller` can dispatch multiple `Commands`.
-<br/>
+<br>
 Each `Controller` Class is ONLY responsible for one `Route`.
-<br/>
+<br>
 Each `Controller` MUST have a `handle` function inside it.
-<br/>
+<br>
 All the API `Controllers` SHOULD be in the `src/backEnd/Interfaces/Api/Controllers` folder.
 
 
@@ -248,18 +251,18 @@ class LoginController extends ApiController
 
 
 
-<br/>
+<br>
 <a name="Commands"></a>
 ###Commands
 
 `Commands` are the Public API of the Module. 
 
 The `Module` exposes a Command per Functionality (each functionality provided by a `Module` should be presented as `Command`).
-<br/>
+<br>
 The `Command` can do anything inside it's `Module` (except executing `Commands`).
-<br/>
+<br>
 A `Command` can return `Data`, but SHOULD not return a response (the Controller job is to return a response).
-<br/>
+<br>
 The reusable code of the `Module` (reusable between different `Commands` in the same `Module`) can be extracted into `Services`.
 
 
@@ -276,11 +279,9 @@ class LoginCommand extends Command
 {
     public function handle(LoginInput $loginInput, AuthenticationService $authenticationService)
     {
-        $token = $authenticationService->authenticate($loginInput);
-        $user = $authenticationService->getAuthenticatedUser();
-        $userWithToken = $authenticationService->injectToken($token, $user);
+        $user = $authenticationService->authenticate($loginInput);
 
-        return $userWithToken;
+        return $user;
     }
 }
 ```
@@ -296,7 +297,7 @@ $user = $this->dispatch(LoginCommand::class);
 
 
 
-<br/>
+<br>
 <a name="Models"></a>
 ###Models
 
@@ -330,16 +331,16 @@ class User extends Model
 
 
 
-<br/>
+<br>
 <a name="Transformers"></a>
 ###Transformers
 
 `Transformers` are responsible for taking an instance of a `Model` and converting it to a formated Array that is easy to be *Serialized*.
 
 Each `Transformer` MUST have a `transform` function
-<br/>
+<br>
 All the API `Transformers` SHOULD be in the `src/backEnd/Interfaces/Api/Transformers` folder.
-<br/>
+<br>
 For more information about the `Transformers` concept, read [this](http://fractal.thephpleague.com/transformers/).
 
 
@@ -357,10 +358,10 @@ class UserTransformer extends Transformer
     public function transform(User $user)
     {
         return [
-            'id'    => (int)$user->id,
+            'id'    => (int) $user->id,
             'name'  => $user->name,
             'email' => $user->email,
-            'token' => $user->token,
+            'boss'  => (bool) $user->isBoss,
         ];
     }
 }
@@ -370,6 +371,7 @@ class UserTransformer extends Transformer
 ```php
 // getting any Model
 $user = $this->getUser();
+
 // building the response with the transformer of the Model
 $this->response->item($user, new UserTransformer());
 ```
@@ -377,6 +379,7 @@ $this->response->item($user, new UserTransformer());
 ```php
 // getting many Models
 $users = $this->getUsers();
+
 // building the response with the transformer of the Model
 return $this->response->paginator($users, new UserTransformer());
 ```
@@ -384,17 +387,17 @@ return $this->response->paginator($users, new UserTransformer());
 
 
 
-<br/>
+<br>
 <a name="Inputs"></a>
 ###Inputs
 
 `Inputs` are a great way to transfer the user input Data between the different components and automatically apply the Validation rules.
 
 The `Input` has two main roles, firts to automatically validate the data against the defined rules and second to serve the data anywhere in the App.
-<br/>
+<br>
 It's highly recommended to follow this pattern to transfer the user input data across the application components, to ensure the data is valid and never lost.
-<br/>
-Every `Input` MUST have `rules` and `get` functions, both returning Arrays.
+<br>
+Every `Input` MUST have a `rules` and `get` functions, both returning Arrays.
 
 `Input` code sample:
 
@@ -436,24 +439,26 @@ public function handle(LoginInput $loginInput)
 
 
 
-<br/>
+<br>
 <a name="Repositories"></a>
 ###Repositories
 
 `Repositories` are the implementation of the Repository Design Pattern.
 
 `Repositories` save and retrieve `Models` to or from the underlying storage mechanism.
-<br/>
+<br>
 The `Repository` is used to separate the logic that retrieves the data and maps it to a `Model`, from the business logic that acts on the `Model`.
-<br/>
+<br>
 Every `Model` SHOULD have a `Repository`. 
-<br/>
+<br>
 You MUST not directly access a `Model` to perform any query. Instead, you SHOULD do this through the Repository.
-<br/>
+<br>
 Every `Repository` MUST have a `model` function that returns the corresponding `Model`.
-<br/>
+<br>
 By extending the extends `BaseRepository` you already have many ready functions to use, no need to write them manually (like `find`, `create`, `update` and much more).
 
+
+For more details about what's provded by the Repository Class check out the [documentation](https://github.com/andersao/l5-repository) of the package used for that.
 
 `Repository` code sample:
 
@@ -479,14 +484,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 $users = $userRepository->paginate(10);
 ```
 
-<br/>
+<br>
 <a name="Criterias"></a>
 ###Criterias
 
 `Criterias` are a way to change the `Repository` of the query by applying specific conditions according to your needs.
 
 Every `Criteria` must have an `apply` function.
-<br/>
+<br>
 For more information about the `Criteria` read [this](https://github.com/andersao/l5-repository#create-a-criteria).
 
 
@@ -520,7 +525,7 @@ public function handle(UserRepositoryInterface $userRepository)
 }
 ```
 
-<br/>
+<br>
 <a name="Exceptions"></a>
 ###Exceptions
 
@@ -563,15 +568,15 @@ try {
 ```
 
 
-<br/>
+<br>
 <a name="Tests"></a>
 ###Tests
 
-The very essential `Tests` types are Unit Tests and Functional Tests . (additional `Tests` types are Integration Tests and Acceptance Tests).
+The two most essential `Tests` types are here are the Unit Tests and the Functional Tests . (Additional `Tests` types are Integration Tests and Acceptance Tests).
 
-The `Interface` can have Functional `Tests`, (Example testing the `Routes` are doing what's expected from them).
-<br/>
-The `Module` can have Unit `Tests`, (Example testing the `Command` it's doing it's job).
+`Interface` should be covered by Functional `Tests`, (Example testing the `Routes` are doing what's expected from them).
+<br>
+`Module` should be covered by Unit `Tests`, (Example testing the `Command` it's doing it's job).
 
 
 
@@ -642,15 +647,29 @@ Test Function:
     }
 ```
 
-**Useful Tests Functions:** (available in all your `Tests`)
+**Some Useful Helper Tests Functions:** (available in all your `Tests`)
 
-- ```assertResponseContainKeys($keys, $response)```
-- ```assertResponseContainValues($values, $response)```
-- ```assertResponseContainKeyValue($data, $response)```
+```php
+- assertResponseContainKeys($keys, $response)
+- assertResponseContainValues($values, $response)
+- assertResponseContainKeyValue($data, $response)
+```
 
 
 
 
+
+<br>
+___
+
+<a name="Folders-Structure"></a>
+###Folders Structure
+
+![](http://s24.postimg.org/rmy7xyhdx/freestyle_architecture_folders_structure.png)
+
+
+
+<MEGA-PRO-----------------------------------------------------------MEGA-PRO>
 
 
 <br/>
