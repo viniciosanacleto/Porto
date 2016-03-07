@@ -58,8 +58,6 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 
 
 
-
-
 <a name="Introduction"></a>
 ###Introduction
 
@@ -143,11 +141,11 @@ One of the major roles that the `Infrastructure` play, is facilitating the upgra
 
 The Request life cycle:
 
-1. the `User` makes a `Request`
-2. the `Route`, calls a `Controller` (on the `Interface` layer)
-3. the `Controller` dispatches a `Command`  (on the `Module` layer)
-4. the `Command` performs the business logic (inside the `Module` itself) and returns {anything} back to the `Controller` (on the `Interface` layer)
-5. the `Controller` return {anything} coming from the `Command` back to the `User`
+1. [Client Side]: `User` makes a `Request` (by calling an Endpoint)
+2. [Interface Layer]: `Route` calls a `Controller` (on an `Interface`)
+3. [Interface Layer]: `Controller` dispatches a `Command` (on a `Module`)
+4. [Modules Layer]: `Command` performs some business logic and returns {anything} back to the `Controller`.
+5. [Interface Layer]: `Controller` builds a response of {anything} and send it to the `User`
 
 
 
@@ -158,7 +156,7 @@ The Request life cycle:
 <a name="Components"></a>
 ##Components
 
-Each `Layer` in the Freestyle Architecture consist of multiple `Components`.
+Each `Layer` Element *(each `Interface` and each `Module` in the `Interfaces` and `Modules` layer)* consist of multiple `Components`.
 
 I will explain the role of each of the components and show you how to use them:
 
@@ -666,7 +664,6 @@ ___
 ###Folders Structure
 
 ![](http://s24.postimg.org/rmy7xyhdx/freestyle_architecture_folders_structure.png)
-
 
 
 <MEGA-PRO-----------------------------------------------------------MEGA-PRO>
