@@ -7,7 +7,7 @@
 The Freestyle Architecture is a clean and easy to understand Software Architecture. 
 It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-View-Controller Architecture.
 
-The Freestyle Architecture was designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Web Applications.
+The Freestyle Architecture is designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Web Applications.
 
 <MEGA-PRO-----------------------------------------------------------MEGA-PRO>
 
@@ -36,6 +36,9 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 
 <MEGA-PRO-----------------------------------------------------------MEGA-PRO>
 
+
+
+
 - [Introduction](#Introduction)
 	- [Interfaces](#Interfaces)
 	- [Modules](#Modules)
@@ -53,8 +56,9 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 	- [Criterias](#Criterias)
 	- [Exceptions](#Exceptions)
 	- [Tests](#Tests)
+	- [Providers](#Providers)
 - [Folders-Structure](#Folders-Structure)
-- [Code Sample](#Code-Sample)
+- [The Development Workflow](#Development-Workflow)
 
 
 
@@ -63,6 +67,7 @@ The Freestyle Architecture was designed to be Modular, Agile and Easy to underst
 
 The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. *(Each layer contained in a folder)*.
 
+Each layer contains some components *(components are classes like Models and Controllers)*. Some of those components are essential to a layer *(main components)* and some are optional *(additional components)*.
 
 <br>
 <a name="Interfaces"></a>
@@ -75,7 +80,7 @@ An `Interface` is what the user uses to access an application.
 It can be an `API` (responding to Endpoints calls), `CLI` (executing Commands) or anything else you prefer.
 
 However in the Freestyle Architecture we try our best to implement a modern coding practices. 
-Thus we recommend not making a `WEB` Interface that serves HTML Pages, instead build your `WEB` App with a JS Frameowrk like (AngularJS or ReactJS or...) and let your App request Data from your `API`.
+Thus we recommend not making a `WEB` Interface that serves HTML Pages, instead build your `WEB` App with a JS Framework like (AngularJS or ReactJS or...) and let your App request Data from your `API`.
 This way you don't have to change your code to support new devides in the future like (Mobile App, Tablets App or Desktop App) since all your Apps can use the same `API`. 
 And you can even allow other Apps to integrate with your App real quick, since you already have your `API` ready.
 
@@ -93,7 +98,7 @@ The **Modules** layer contains the Application specific business logic. *(Applic
 
 Each analogical business logic SHOULD be encapsulated insde a separate `Module`. *(All similar functionalities should be wrapped in a Module apart)*.
 <br>
-All the `Module` functionalities MUST be exposed via `Commands` and ONLY accessible via their `Commands`. *(W'll see what a Command is below)*.
+All the `Module` functionalities MUST be exposed via `Commands` and ONLY accessible via their `Commands`. *(We'll see what a Command is below)*.
 <br>
 Every `Module` MUST contain at least one `Command`. *(A Module can have one or many Commands)*.
 <br>
@@ -105,7 +110,7 @@ The main components of a `Module` are `Commands` and `Models`.
 <br>
 Additional components can be `Inputs`, `Exceptions`, `Repositories` and `Criterias`.
 
-In the `Module`, you are free to add much more components if you wish, like `Services`, `Adapters`, `Factories`, `ServiceProviders`, `Facades`,...
+In the `Module`, you are free to add much more components if you wish, like `Services`, `Adapters`, `Factories`, `Providers`, `Migrations`, `Facades`,...
 
 
 <br>
@@ -333,7 +338,7 @@ class User extends Model
 <a name="Transformers"></a>
 ###Transformers
 
-`Transformers` are responsible for taking an instance of a `Model` and converting it to a formated Array that is easy to be *Serialized*.
+`Transformers` are responsible for taking an instance of a `Model` and converting it to a formatted Array that is easy to be *Serialized*.
 
 Each `Transformer` MUST have a `transform` function
 <br>
@@ -391,7 +396,7 @@ return $this->response->paginator($users, new UserTransformer());
 
 `Inputs` are a great way to transfer the user input Data between the different components and automatically apply the Validation rules.
 
-The `Input` has two main roles, firts to automatically validate the data against the defined rules and second to serve the data anywhere in the App.
+The `Input` has two main roles, first to automatically validate the data against the defined rules and second to serve the data anywhere in the App.
 <br>
 It's highly recommended to follow this pattern to transfer the user input data across the application components, to ensure the data is valid and never lost.
 <br>
@@ -453,10 +458,10 @@ You MUST not directly access a `Model` to perform any query. Instead, you SHOULD
 <br>
 Every `Repository` MUST have a `model` function that returns the corresponding `Model`.
 <br>
-By extending the extends `BaseRepository` you already have many ready functions to use, no need to write them manually (like `find`, `create`, `update` and much more).
+By extending the `BaseRepository` you already have many ready functions to use, no need to write them manually (like `find`, `create`, `update` and much more).
 
 
-For more details about what's provded by the Repository Class check out the [documentation](https://github.com/andersao/l5-repository) of the package used for that.
+For more details about what's provided by the Repository Class check out the [documentation](https://github.com/andersao/l5-repository) of the package used for that.
 
 `Repository` code sample:
 
@@ -653,6 +658,99 @@ Test Function:
 - assertResponseContainKeyValue($data, $response)
 ```
 
+<br>
+<a name="Providers"></a>
+###Service Providers
+
+Each `Module` can have it's own `Service Providers` *(one `Service Provider` per `Module` is perfect)*.
+<br>
+The Service Providers can be created inside `Providers` folder.
+
+
+`Service Provider` code sample:
+<br>
+A sample of a `User Module` at path: `(src/Modules/User/Providers/UserServiceProvider.php)`
+
+```php
+namespace Mega\Modules\User\Providers;
+
+use Mega\Infrastructure\Abstracts\ServiceProvider;
+use Mega\Modules\User\Contracts\UserRepositoryInterface;
+use Mega\Modules\User\Repositories\Eloquent\UserRepository;
+
+/**
+ * Class UserServiceProvider
+ *
+ * @category Service Provider
+ * @package  Mega\Modules\User\Providers
+ * @author   Mahmoud Zalt <mahmoud@zalt.me>
+ */
+class UserServiceProvider extends ServiceProvider
+{
+
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
+
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../Migrations/' => database_path('migrations')
+        ], 'migrations');
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+    }
+}
+
+```
+
+**Note:** Every `Service Provider` must be registered inside the `MasterServiceProvider` `(server/src/Infrastructure/Providers/MasterServiceProvider.php)`.
+
+
+To register a service provider in the `MasterServiceProvider` simply add your provider to the `$serviceProviders` property, like this:
+
+```php
+private $serviceProviders = [
+    UserServiceProvider::class,
+    AnotherServiceProvider::class,
+];
+```
+
+Also make sure the `MasterServiceProvider` is registered inside your Framework.
+<br>
+In case of Laravel make sure that `MasterServiceProvider` is registered inside the `providers` array of the `config/app.php`, like so:
+
+```php
+'providers' => [
+	Mega\Infrastructure\Providers\MasterServiceProvider::class
+],
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -660,23 +758,32 @@ Test Function:
 <br>
 ___
 
+
+
+
+
+
+
 <a name="Folders-Structure"></a>
 ###Folders Structure
 
 ![](http://s24.postimg.org/rmy7xyhdx/freestyle_architecture_folders_structure.png)
 
 
+
+<br>
+<a name="Development-Workflow"></a>
+##The Development Workflow
+
+Comming Soon..
+
 <MEGA-PRO-----------------------------------------------------------MEGA-PRO>
 
 
-<br/>
 <a name="Code-Sample"></a>
 ##Code Sample
 
 Comming Soon..
-
-
-
 
 
 
@@ -687,7 +794,6 @@ Let's help Developers write better code. For an easier Developers life :)
 ## Credits
 
 - [Mahmoud Zalt](https://github.com/Mahmoudz)
-- [All Contributors](../../contributors)
 
 ## License
 MIT
