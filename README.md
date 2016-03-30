@@ -40,6 +40,7 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 
 
 - [Introduction](#Introduction)
+- [Layers](#Layers)
 	- [Interfaces](#Interfaces)
 	- [Modules](#Modules)
 	- [Infrastructure](#Infrastructure)
@@ -58,7 +59,7 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 	- [Tests](#Tests)
 	- [Providers](#Providers)
 - [Folders-Structure](#Folders-Structure)
-- [The Development Workflow](#Development-Workflow)
+- [Development Workflow](#Development-Workflow)
 
 
 
@@ -68,6 +69,16 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. *(Each layer contained in a folder)*.
 
 Each layer contains some components *(components are classes like Models and Controllers)*. Some of those components are essential to a layer *(main components)* and some are optional *(additional components)*.
+
+
+<br>
+<a name="Layers"></a>
+###Layers
+
+The architecture consist of 3 layers we'll discuss each one apart:
+<br>
+And we'll explain the usage of each layer and show you why it's important.
+
 
 <br>
 <a name="Interfaces"></a>
@@ -161,9 +172,9 @@ The Request life cycle:
 <a name="Components"></a>
 ##Components
 
-Each `Layer` Element *(each `Interface` and each `Module` in the `Interfaces` and `Modules` layer)* consist of multiple `Components`.
-
-I will explain the role of each of the components and show you how to use them:
+Each layer in the architecture consist of multiple components, we'll discuss each one apart. 
+<br>
+And we'll explain the role of each component and show you how it can be used.
 
 <br>
 <a name="Routes"></a>
@@ -745,16 +756,6 @@ In case of Laravel make sure that `MasterServiceProvider` is registered inside t
 
 
 
-
-
-
-
-
-
-
-
-
-
 <br>
 ___
 
@@ -762,8 +763,7 @@ ___
 
 
 
-
-
+<br>
 <a name="Folders-Structure"></a>
 ###Folders Structure
 
@@ -773,9 +773,15 @@ ___
 
 <br>
 <a name="Development-Workflow"></a>
-##The Development Workflow
+###Development Workflow
 
-Comming Soon..
+Coming Soon..
+
+
+
+
+
+
 
 <MEGA-PRO-----------------------------------------------------------MEGA-PRO>
 
@@ -783,7 +789,7 @@ Comming Soon..
 <a name="Code-Sample"></a>
 ##Code Sample
 
-Comming Soon..
+Coming Soon..
 
 
 
