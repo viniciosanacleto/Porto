@@ -22,6 +22,7 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 - Easy to Test.
 - Easy Framework Upgrade (Decoupled application code from the framework code).
 - Zero Code Decoupling.
+- Easy to understand by any developer (less magic, more readable code).
 
 <br>
 
@@ -51,7 +52,7 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 	- [Commands](#Commands)
 	- [Models](#Models)
 	- [Transformers](#Transformers)
-	- [Inputs](#Inputs)
+	- [Requests](#Requests)
 	- [Repositories](#Repositories)
 	- [Criterias](#Criterias)
 	- [Exceptions](#Exceptions)
@@ -96,7 +97,7 @@ And you can even allow other Apps to integrate with your App real quick, since y
 
 The main components of an `Interface` are `Routes` and `Controllers`.
 <br>
-Additional components can be `Transformers` and `Tests`.
+The optional components can be `Requests`, `Transformers` and `Tests`.
 
 
 
@@ -106,7 +107,7 @@ Additional components can be `Transformers` and `Tests`.
 
 The **Modules** layer contains the Application specific business logic. *(Application functionalities)*.
 
-Each analogical business logic SHOULD be encapsulated insde a separate `Module`. *(All similar functionalities should be wrapped in a Module apart)*.
+Each analogical business logic SHOULD be encapsulated insde a separate `Module`. *(All similar functionalities should be wrapped in a Module)*.
 <br>
 All the `Module` functionalities MUST be exposed via `Commands` and ONLY accessible via their `Commands`. *(We'll see what a Command is below)*.
 <br>
@@ -118,16 +119,14 @@ Every `Module` MUST contain at least one `Command`. *(A Module can have one or m
 
 The main components of a `Module` are `Commands` and `Models`. 
 <br>
-Additional components can be `Inputs`, `Exceptions`, `Repositories` and `Criterias`.
-
-In the `Module`, you are free to add much more components if you wish, like `Services`, `Adapters`, `Factories`, `Providers`, `Migrations`, `Facades`,...
+The optional components can be `Repositories`, `Services`, `Exceptions`, `Providers`, `Migrations`, `Criterias`, `Adapters`, `Factories`, `Facades` and anything else...
 
 
 <br>
 <a name="Infrastructure"></a>
 ###Infrastructure
 
-The **Infrastructure** layer is the glue between the `Components` and the Framework. *(In this example it's Laravel)*.
+The **Infrastructure** layer is the glue between the application `Components` and the Framework. *(In this example it's Laravel)*.
 
 The `Infrastructure` is what links everything with the framework (usually Infrastructure means the framework itself but in this case, it's the links to a framework).
 <br>
@@ -135,7 +134,7 @@ The `Infrastructure` contains the reusable code between the `Modules` themselves
 <br>
 The `Infrastructure` separates the application code from the Framework code.
 <br>
-Usually, you don't have to touch this layer code. (Unless you see it's essential).
+Usually, you don't have to touch this layer code. (Unless you know what you are doing).
 
 One of the major roles that the `Infrastructure` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
 
@@ -156,11 +155,11 @@ One of the major roles that the `Infrastructure` play, is facilitating the upgra
 
 The Request life cycle:
 
-1. [Client Side]: `User` makes a `Request` (by calling an Endpoint)
-2. [Interface Layer]: `Route` calls a `Controller` (on an `Interface`)
-3. [Interface Layer]: `Controller` dispatches a `Command` (on a `Module`)
-4. [Modules Layer]: `Command` performs some business logic and returns {anything} back to the `Controller`.
-5. [Interface Layer]: `Controller` builds a response of {anything} and send it to the `User`
+1. **[Client Side]:** `User` calls a `Route` Endpoint (makes an HTTP `Request`)
+2. **[Interface Layer]:** `Route` calls a `Controller`
+3. **[Interface Layer > Modules Layer]:** `Controller` dispatches a `Command`
+4. **[Modules Layer]:** `Command` performs some business logic and returns *{something}* to the `Controller`
+5. **[Interface Layer]:** `Controller` builds a response and send it back to the `User`
 
 
 
@@ -173,26 +172,29 @@ The Request life cycle:
 
 Each layer in the architecture consist of multiple components, we'll discuss each one apart. 
 <br>
-And we'll explain the role of each component and show you how it can be used.
+And we'll explain the role of each component and show how it can be used.
 
 <br>
 <a name="Routes"></a>
 ###Routes
 
 The `Routes` are the first receivers (ports) of the Request.
-	
+
 Not all `Interface` need to have `Routes` like the **CLI** `Interface`.
 <br>
 However the **API** `Interface` is one of the Interfaces that requires to have `Routes` inside it.
 <br>
+The `Routes` `(A.K.A. Endpoints)` can be placed inside multiple routes files each representing a specific version like `(api.v1, api.v2)`
+<br>
 The `Route` main job is to call a particular `Controller` once a Request is made.
 <br>
-Each `Route` represent a single API Endpoint.
+Each `Route` can represent a single API Endpoint.
 <br>
 Each `Route` SHOULD have a dedicated `Controller` for it. 
 <br>
 A `Route` SHOULD only call the `handle` Function on it's `Controller`.
 
+For more information about the `Routes` read [this](https://laravel.com/docs/routing/).
 
 
 <br>
@@ -248,24 +250,24 @@ Each `Model` SHOULD define the Relations between itself and any other `Model` (i
 
 `Transformers` are responsible for taking an instance of a `Model` and converting it to a formatted Array that is easy to be *Serialized*.
 
-For more information about the `Transformers` concept, read [this](http://fractal.thephpleague.com/transformers/).
+For more information about the `Transformers` read [this](http://fractal.thephpleague.com/transformers/).
 
 
 
 
 
 <br>
-<a name="Inputs"></a>
-###Inputs
+<a name="Requests"></a>
+###Requests
 
-The `Inputs` concept is created for this Architecture.
-
-`Inputs` are a great way to transfer the user input Data between the different components and automatically apply the Validation rules.
-
-The `Input` has two main roles, first to automatically validate the data against the defined rules and second to serve the data anywhere in the App.
+`Requests` are very useful to automatically apply the Validation rules. Once they are injected (in your `Controller`) they automatically check if the request data matches your validation rules, if not matched they throw an Exception immediately.
 <br>
+`Requests` class are very good place to write your validation rules. They can also be used to write your authorization code, to check if the user is authorized to make this request.
 
-It's highly recommended to follow this pattern to transfer the user input data across the application components, to ensure the data is valid and never lost.
+For more information about the `Requests` check [this](https://laravel.com/docs/requests).
+
+
+
 
 
 
