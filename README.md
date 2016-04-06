@@ -224,7 +224,7 @@ Each `Controller` can only respond to a single `Route` (so every controller SHOU
 
 The `Module` exposes a Command per Functionality (each functionality provided by a `Module` should be presented as `Command`).
 <br>
-The `Command` can do anything inside it's `Module` (except executing `Commands`).
+The `Command` can do anything inside it's `Module` (even executing another `Commands` from the same Module).
 <br>
 A `Command` can return `Data`, but SHOULD not return a response (the Controller job is to return a response).
 <br>
