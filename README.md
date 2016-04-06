@@ -15,6 +15,7 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 **Quality Attributes: (Advantages)**
 
 - Reusable Code (Modules of Business Logic).
+- Simple files and folders structure.
 - Fast Development.
 - Easy Maintenance.
 - Super Scalable (Easy to modify and add features).
@@ -157,9 +158,10 @@ The Request life cycle:
 
 1. **[Client Side]:** `User` calls a `Route` Endpoint (makes an HTTP `Request`)
 2. **[Interface Layer]:** `Route` calls a `Controller`
-3. **[Interface Layer > Modules Layer]:** `Controller` dispatches a `Command`
-4. **[Modules Layer]:** `Command` performs some business logic and returns *{something}* to the `Controller`
-5. **[Interface Layer]:** `Controller` builds a response and send it back to the `User`
+3. **[Interface Layer]:** `Controller`read the request data
+4. **[Interface Layer > Modules Layer]:** `Controller` dispatches a `Command` and pass the data to it
+5. **[Modules Layer]:** `Command` performs some business logic and returns *{something}* back to the `Controller`
+6. **[Interface Layer]:** `Controller` builds a response and send it back to the `User`
 
 
 
@@ -201,18 +203,17 @@ For more information about the `Routes` read [this](https://laravel.com/docs/rou
 <a name="Controllers"></a>
 ###Controllers
 
-`Controllers` are the same as in MVC, the only difference here is that a `Controller` can only respond to a single `Route`.
+`Controllers` are the same as in MVC, but their responsibilities are limited.
 
 `Controllers` act as the relation between the `Interfaces` layer and the `Modules` layer (by dispatching the `Modules` `Commands`).
 <br>
-The `Controller` has two main roles, first dispatching `Commands` and second building a Response.
+The `Controller` has three main roles the first is reading the request data (user input), second dispatching `Commands` (and passing that data) and third building a Response from whatever the command has returned.
 <br>
 `Controllers` SHOULD not have any form of business logic. (It dispatches `Commands` to perform a business logic).
 <br>
 A `Controller` can dispatch multiple `Commands`.
 <br>
-Each `Controller` Class is ONLY responsible for one `Route`.
-
+Each `Controller` can only respond to a single `Route` (so every controller SHOULD have a single function).
 
 
 <br>
@@ -354,8 +355,7 @@ ___
 <a name="Folders-Structure"></a>
 ##Folders Structure
 
-Comming Soon..
-
+Coming Soon..
 
 
 <a name="Code-Sample"></a>
