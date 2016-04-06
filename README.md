@@ -2,6 +2,9 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)](http://www.zalt.me)
 
+<a name="Introduction"></a>
+##Introduction
+
 
 The Freestyle Architecture is a clean and easy to understand Software Architecture. 
 It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-View-Controller Architecture.
@@ -11,8 +14,35 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 
 ![](http://s9.postimg.org/4ay6fcm5r/betatesting.jpg)
 
+##Content
 
-**Quality Attributes: (Advantages)**
+- [Layers](#Layers)
+	- [Interfaces](#Interfaces)
+	- [Modules](#Modules)
+	- [Infrastructure](#Infrastructure)
+- [Layers Diagram](#Layers-Diagram)
+- [How it works](#How-it-works)
+- [Components](#Components)
+	- [Routes](#Routes)
+	- [Requests](#Requests)
+	- [Controllers](#Controllers)
+	- [Commands](#Commands)
+	- [Models](#Models)
+- [Folders-Structure](#Folders-Structure)
+- [Development Workflow](#Development-Workflow)
+
+<br>
+
+>Business guys do not care about Code, you are the only one who care about it. So let the Code work for you!
+
+
+![](http://s11.postimg.org/ay107nxlv/contemporary_paintings.jpg)
+
+
+
+
+<a name="Quality-Attributes"></a>
+###Quality Attributes
 
 - Reusable Code (Modules of Business Logic).
 - Simple files and folders structure.
@@ -25,58 +55,41 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 - Zero Code Decoupling.
 - Easy to understand by any developer (less magic, more readable code).
 
-<br>
-
->Business guys do not care about Code, you are the only one who care about it. So let the Code work for you, don't work for it!
 
 
-![](http://s11.postimg.org/ay107nxlv/contemporary_paintings.jpg)
+<a name="Terminology"></a>
+###Terminology
 
+`Layer` is a logical term, used as indicate to the separation between things. In reality it's just a folder.
 
-##Content
+`Component` is a class, that has specific responsibility.
 
-<MEGA-PRO-----------------------------------------------------------MEGA-PRO>
+<a name="Conventions"></a>
+###Conventions
 
-
-
-
-- [Introduction](#Introduction)
-- [Layers](#Layers)
-	- [Interfaces](#Interfaces)
-	- [Modules](#Modules)
-	- [Infrastructure](#Infrastructure)
-- [Layers Diagram](#Layers-Diagram)
-- [How it works](#How-it-works)
-- [Components](#Components)
-	- [Routes](#Routes)
-	- [Controllers](#Controllers)
-	- [Commands](#Commands)
-	- [Models](#Models)
-	- [Transformers](#Transformers)
-	- [Requests](#Requests)
-	- [Repositories](#Repositories)
-	- [Criterias](#Criterias)
-	- [Exceptions](#Exceptions)
-	- [Tests](#Tests)
-	- [Providers](#Providers)
-- [Folders-Structure](#Folders-Structure)
-- [Development Workflow](#Development-Workflow)
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [[RFC2119](http://tools.ietf.org/html/rfc2119)].
 
 
 
-<a name="Introduction"></a>
-##Introduction
 
-The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. *(Each layer contained in a folder)*.
 
-Each layer contains some components *(components are classes like Models and Controllers)*. Some of those components are essential to a layer *(main components)* and some are optional *(additional components)*.
+
+
+
+
+
 
 
 <br>
 <a name="Layers"></a>
 ##Layers
 
-The architecture consist of 3 layers we'll discuss each one apart:
+The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. *(Each layer contained in a folder)*.
+
+Each layer contains some components *(components are classes like Models and Controllers)*. Some of those components are essential to a layer *(main components)* and some are optional *(additional components)*.
+
+
+We'll discuss each one apart:
 <br>
 And we'll explain the usage of each layer and show you why it's important.
 
@@ -96,9 +109,9 @@ Thus we recommend not making a `WEB` Interface that serves HTML Pages, instead b
 This way you don't have to change your code to support new devides in the future like (Mobile App, Tablets App or Desktop App) since all your Apps can use the same `API`. 
 And you can even allow other Apps to integrate with your App real quick, since you already have your `API` ready.
 
-The main components of an `Interface` are `Routes` and `Controllers`.
+The main components of an `Interface` are `Routes`, `Requests` and `Controllers`.
 <br>
-The optional components can be `Requests`, `Transformers` and `Tests`.
+The optional components can be `Transformers` and `Tests`.
 
 
 
@@ -199,6 +212,19 @@ A `Route` SHOULD only call the `handle` Function on it's `Controller`.
 For more information about the `Routes` read [this](https://laravel.com/docs/routing/).
 
 
+
+<br>
+<a name="Requests"></a>
+###Requests
+
+`Requests` are very useful to automatically apply the Validation rules. Once they are injected (in your `Controller`) they automatically check if the request data matches your validation rules, if not matched they throw an Exception immediately.
+<br>
+`Requests` class are very good place to write your validation rules. They can also be used to write your authorization code, to check if the user is authorized to make this request.
+
+For more information about the `Requests` check [this](https://laravel.com/docs/requests).
+
+
+
 <br>
 <a name="Controllers"></a>
 ###Controllers
@@ -214,6 +240,7 @@ The `Controller` has three main roles the first is reading the request data (use
 A `Controller` can dispatch multiple `Commands`.
 <br>
 Each `Controller` can only respond to a single `Route` (so every controller SHOULD have a single function).
+
 
 
 <br>
@@ -245,109 +272,6 @@ Each `Model` SHOULD define the Relations between itself and any other `Model` (i
 
 
 
-<br>
-<a name="Transformers"></a>
-###Transformers
-
-`Transformers` are responsible for taking an instance of a `Model` and converting it to a formatted Array that is easy to be *Serialized*.
-
-For more information about the `Transformers` read [this](http://fractal.thephpleague.com/transformers/).
-
-
-
-
-
-<br>
-<a name="Requests"></a>
-###Requests
-
-`Requests` are very useful to automatically apply the Validation rules. Once they are injected (in your `Controller`) they automatically check if the request data matches your validation rules, if not matched they throw an Exception immediately.
-<br>
-`Requests` class are very good place to write your validation rules. They can also be used to write your authorization code, to check if the user is authorized to make this request.
-
-For more information about the `Requests` check [this](https://laravel.com/docs/requests).
-
-
-
-
-
-
-
-<br>
-<a name="Repositories"></a>
-###Repositories
-
-`Repositories` are the implementation of the Repository Design Pattern.
-
-`Repositories` save and retrieve `Models` to or from the underlying storage mechanism.
-<br>
-The `Repository` is used to separate the logic that retrieves the data and maps it to a `Model`, from the business logic that acts on the `Model`.
-<br>
-Every `Model` SHOULD have a `Repository`. 
-<br>
-You MUST not directly access a `Model` to perform any query. Instead, you SHOULD do this through the Repository.
-
-
-
-<br>
-<a name="Criterias"></a>
-###Criterias
-
-`Criterias` are a way to change the `Repository` of the query by applying specific conditions according to your needs.
-
-For more information about the `Criteria` read [this](https://github.com/andersao/l5-repository#create-a-criteria).
-
-
-
-
-
-<br>
-<a name="Exceptions"></a>
-###Exceptions
-
-`Exceptions` are classes to be thrown in case of errors.
-<br>
-`Exceptions` can be thrown from anywhere in the application.
-
-
-<br>
-<a name="Tests"></a>
-###Tests
-
-The two most essential `Tests` types in this architecture are the Unit Tests and the Functional Tests. (Additional `Tests` types are Integration Tests and Acceptance Tests).
-
-`Interface` should be covered by Functional `Tests`, (Example testing the `Routes` are doing what's expected from them).
-<br>
-`Module` should be covered by Unit `Tests`, (Example testing the `Command` it's doing it's job).
-
-
-
-
-<br>
-<a name="Providers"></a>
-###Service Providers
-
-`Service Providers` let the Layers register some *stuff* into the framework service container.
-
-Each `Module` can have it's own `Service Providers` *(one `Service Provider` per `Module` is perfect)*.
-<br>
-The `Infrastructure` layer SHOULD register the `Service Providers` of all the `Modules`. And then the `Infrastructure` Master `Service Providers` SHOULD be registered in the Framework.
-
-For more information about the `Service Providers` read [this](https://laravel.com/docs/master/providers).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <br>
 ___
@@ -355,13 +279,13 @@ ___
 <a name="Folders-Structure"></a>
 ##Folders Structure
 
-Coming Soon..
+Coming Soon.
 
 
 <a name="Code-Sample"></a>
 ##Code Sample
 
-Coming Soon..
+Coming Soon. (Working in progress..)
 
 
 
