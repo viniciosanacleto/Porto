@@ -9,19 +9,26 @@
 The Freestyle Architecture is a clean and easy to understand Software Architecture. 
 It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-View-Controller Architecture.
 
-The Freestyle Architecture is designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Web Applications.
+The Freestyle Architecture is designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Applications.
+
+
 
 
 ![](http://s9.postimg.org/4ay6fcm5r/betatesting.jpg)
 
 ##Content
 
+- [Introduction](#Introduction)
+	- [Quality Attributes](#Quality-Attributes)
+	- [Terminology](#Terminology)
+	- [Conventions](#Conventions)
+	- [General Information](#General-Information)
+- [How it works](#How-it-works)
 - [Layers](#Layers)
 	- [Interfaces](#Interfaces)
 	- [Modules](#Modules)
 	- [Infrastructure](#Infrastructure)
 - [Layers Diagram](#Layers-Diagram)
-- [How it works](#How-it-works)
 - [Components](#Components)
 	- [Routes](#Routes)
 	- [Requests](#Requests)
@@ -40,14 +47,13 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 
 
 
-
 <a name="Quality-Attributes"></a>
 ###Quality Attributes
 
 - Reusable Code (Modules of Business Logic).
 - Simple files and folders structure.
-- Fast Development.
-- Easy Maintenance.
+- Fast Development (Easy to implement new features).
+- Easy Maintenance (Easy to adapt changes).
 - Super Scalable (Easy to modify and add features).
 - Zero Technical debt (Low communication between Developers).
 - Easy to Test.
@@ -71,6 +77,33 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 
 
+
+<a name="General-Information"></a>
+###General Information
+
+The Freestyle Architecture is a way to structure the software by defining the relations between the application components of different layers.
+
+The main goal is to organise the code base, by thinking of actions in isolation and using the code as modelling tool.
+
+The Freestyle Architecture is very helpful for enterprise and long term projects, as these projects tends to have higher complexity with time.
+
+
+
+
+
+<br>
+<a name="How-it-works"></a>
+##How it works
+
+The Request life cycle:
+
+1. **[Client Side]:** `User` calls a `Route` Endpoint (makes an HTTP `Request`)
+2. **[Interface Layer]:** `Route` calls a `Controller`
+3. **[Interface Layer]:** `Controller`read the `Request` input data
+4. **[Interface Layer > Modules Layer]:** `Controller` call a `Command` and pass data to it
+5. **[Modules Layer]:** `Command` performs some business logic *(call different components even `Commands` of the same `Module`)*
+6. **[Modules Layer]:** `Command` returns *{something}* back to the `Controller`
+7. **[Interface Layer]:** `Controller` builds a response and send it back to the `User`
 
 
 
@@ -140,7 +173,7 @@ The optional components can be `Repositories`, `Exceptions`, `Service Providers`
 <a name="Infrastructure"></a>
 ###Infrastructure
 
-The **Infrastructure** layer is the glue between the application `Components` and the Framework. *(In this example it's Laravel)*.
+The **Infrastructure** layer is the glue between the application `Components` and the Framework.
 
 The `Infrastructure` is what links everything with the framework (usually Infrastructure means the framework itself but in this case, it's the links to a framework).
 <br>
@@ -163,23 +196,6 @@ The optional components can be `Database Criterias`, `Models Factories`.
 ##Layers Diagram
 
 ![](http://s29.postimg.org/amlftwh13/freestyle_architecture.png)
-
-
-
-
-<br>
-<a name="How-it-works"></a>
-##How it works
-
-The Request life cycle:
-
-1. **[Client Side]:** `User` calls a `Route` Endpoint (makes an HTTP `Request`)
-2. **[Interface Layer]:** `Route` calls a `Controller`
-3. **[Interface Layer]:** `Controller`read the request data
-4. **[Interface Layer > Modules Layer]:** `Controller` dispatches a `Command` and pass the data to it
-5. **[Modules Layer]:** `Command` performs some business logic and returns *{something}* back to the `Controller`
-6. **[Interface Layer]:** `Controller` builds a response and send it back to the `User`
-
 
 
 
