@@ -109,9 +109,9 @@ Thus we recommend not making a `WEB` Interface that serves HTML Pages, instead b
 This way you don't have to change your code to support new devides in the future like (Mobile App, Tablets App or Desktop App) since all your Apps can use the same `API`. 
 And you can even allow other Apps to integrate with your App real quick, since you already have your `API` ready.
 
-The main components of an `Interface` are `Routes`, `Requests` and `Controllers`.
+The main components of an **Interface** are `Routes`, `Requests` and `Controllers`.
 <br>
-The optional components can be `Transformers` and `Tests`.
+The optional components can be `Response Transformers` and `Tests`.
 
 
 
@@ -131,9 +131,9 @@ Every `Module` MUST contain at least one `Command`. *(A Module can have one or m
 <br>
 `Modules` can be reused across different projects. *(Think of them as third-party packages)*.
 
-The main components of a `Module` are `Commands` and `Models`. 
+The main components of a **Module** are `Commands` and `Models`. 
 <br>
-The optional components can be `Repositories`, `Services`, `Exceptions`, `Providers`, `Migrations`, `Criterias`, `Adapters`, `Factories`, `Facades` and anything else...
+The optional components can be `Repositories`, `Exceptions`, `Service Providers`, `Database Migrations`, `Adapters`, `Factories`, `Facades`, `Services`, `Traits` and anything else...
 
 
 <br>
@@ -148,9 +148,13 @@ The `Infrastructure` contains the reusable code between the `Modules` themselves
 <br>
 The `Infrastructure` separates the application code from the Framework code.
 <br>
-Usually, you don't have to touch this layer code. (Unless you know what you are doing).
-
 One of the major roles that the `Infrastructure` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
+
+The main components of the **Infrastructure** are `Abstracts`, `Service Providers`, `Traits` and `Exceptions`. 
+<br>
+The optional components can be `Database Criterias`, `Models Factories`.
+
+
 
 
 
@@ -289,7 +293,7 @@ Coming Soon. (Working in progress..)
 
 
 
-## Help us improve!
+## Help us Improve!
 Let's help Developers write better code. For an easier Developers life :)
 
 
