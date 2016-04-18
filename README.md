@@ -2,19 +2,17 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)](http://www.zalt.me)
 
+
+
 <a name="Introduction"></a>
 ##Introduction
 
+The Freestyle Architecture is a clean and super easy to understand Software Architecture. 
 
-The Freestyle Architecture is a clean and easy to understand Software Architecture. 
-It is inspired by the (DDD) Domain Driven Design Pattern and the (MVC) Model-View-Controller Architecture.
-
-The Freestyle Architecture is designed to be Modular, Agile and Easy to understand. To help Developers build Scalable, Maintainable and Reusable Applications.
+It's designed to be **Modular**, **Agile** and **Easy** to understand. To help Developers write Scalable, Maintainable and Reusable Code.
 
 
 
-
-![](http://s9.postimg.org/4ay6fcm5r/betatesting.jpg)
 
 ##Content
 
@@ -24,19 +22,15 @@ The Freestyle Architecture is designed to be Modular, Agile and Easy to understa
 	- [Conventions](#Conventions)
 	- [General Information](#General-Information)
 - [How it works](#How-it-works)
-- [Layers](#Layers)
-	- [Interfaces](#Interfaces)
-	- [Modules](#Modules)
-	- [Infrastructure](#Infrastructure)
 - [Layers Diagram](#Layers-Diagram)
-- [Components](#Components)
+- [Layers](#Layers)
+	- [Modules](#Modules)
+	- [Services](#Services)
+- [Main Components of a Module](#Components)
 	- [Routes](#Routes)
-	- [Requests](#Requests)
 	- [Controllers](#Controllers)
-	- [Commands](#Commands)
+	- [Tasks](#Tasks)
 	- [Models](#Models)
-- [Folders-Structure](#Folders-Structure)
-- [Development Workflow](#Development-Workflow)
 
 <br>
 
@@ -97,15 +91,24 @@ The Freestyle Architecture is very helpful for enterprise and long term projects
 
 The Request life cycle:
 
-1. **[Client Side]:** `User` calls a `Route` Endpoint (makes an HTTP `Request`)
-2. **[Interface Layer]:** `Route` calls a `Controller`
-3. **[Interface Layer]:** `Controller`read the `Request` input data
-4. **[Interface Layer > Modules Layer]:** `Controller` call a `Command` and pass data to it
-5. **[Modules Layer]:** `Command` performs some business logic *(call different components even `Commands` of the same `Module`)*
-6. **[Modules Layer]:** `Command` returns *{something}* back to the `Controller`
-7. **[Interface Layer]:** `Controller` builds a response and send it back to the `User`
+1. `User` calls an Endpoint *(defined in a `Route` file)*
+2. `Endpoint` calls it's `Controller`
+3. `Controller`read the `Request` input data
+4. `Controller` run one or many `Tasks` *(passing data to them if needed)*
+5. `Task` performs the business logic *(Can use an external service)*
+6. `Task` returns *{something}* to the `Controller`
+7. `Controller` builds the response and send it back to the `User`
 
 
+
+
+
+
+<br>
+<a name="Layers-Diagram"></a>
+##Layers Diagram
+
+An updated one is coming soon..
 
 
 
@@ -117,85 +120,180 @@ The Request life cycle:
 <a name="Layers"></a>
 ##Layers
 
-The Freestyle Architecture consist of 3 layers `Interfaces`, `Modules` and `Infrastructure`. *(Each layer contained in a folder)*.
+The Freestyle Architecture consist of only 2 layers `Modules` and `Services`. *(Each layer contained in a folder)*.
 
-Each layer contains some components *(components are classes like Models and Controllers)*. Some of those components are essential to a layer *(main components)* and some are optional *(additional components)*.
-
-
-We'll discuss each one apart:
-<br>
-And we'll explain the usage of each layer and show you why it's important.
-
-
-<br>
-<a name="Interfaces"></a>
-###Interfaces
-
-The **Interfaces** layer contains the public API's of the application.
-
-An `Interface` is what the user uses to access an application. 
-<br>
-It can be an `API` (responding to Endpoints calls), `CLI` (executing Commands) or anything else you prefer.
-
-However in the Freestyle Architecture we try our best to implement a modern coding practices. 
-Thus we recommend not making a `WEB` Interface that serves HTML Pages, instead build your `WEB` App with a JS Framework like (AngularJS or ReactJS or...) and let your App request Data from your `API`.
-This way you don't have to change your code to support new devides in the future like (Mobile App, Tablets App or Desktop App) since all your Apps can use the same `API`. 
-And you can even allow other Apps to integrate with your App real quick, since you already have your `API` ready.
-
-The main components of an **Interface** are `Routes`, `Requests` and `Controllers`.
-<br>
-The optional components can be `Response Transformers` and `Tests`.
-
+Each layer contain some components *(components are classes like Models and Controllers)*.
 
 
 <br>
 <a name="Modules"></a>
 ###Modules
 
-The **Modules** layer contains the Application specific business logic. *(Application functionalities)*.
+The Modules layer contains the Application specific business logic. *(Application functionalities)*.
 
-Each analogical business logic SHOULD be encapsulated insde a separate `Module`. *(All similar functionalities should be wrapped in a Module)*.
+A Module can be named to the name of a Model, 
+(example In case of a TO DO App a `Task` would be a Module and a `User` is another Module).
+
+A typical Module would contain the following Components:
+
+- Routes
+- Controllers
+- Requests
+- Models
+- Repositories
+- Transformers
+- Tests
+- Exceptions
+- Service Providers
+- Contracts
+- Info
+
+Each of these components MUST be logically related to each other. 
+
+Here's an example of a real User Module structure:
+
+<pre>
+├── Contracts
+│   └── UserRepositoryInterface.php
+├── Controllers
+│   ├── Api
+│   │   ├── ListAllUsersController.php
+│   │   ├── LoginController.php
+│   │   ├── LogoutController.php
+│   │   └── RegisterController.php
+│   ├── Cli
+│   └── Web
+├── Exceptions
+│   └── AccountFailedException.php
+├── Info
+│   ├── dependancies.json
+│   └── readme.md
+├── Models
+│   └── User.php
+├── Providers
+│   ├── RoutesServiceProvider.php
+│   └── UserServiceProvider.php
+├── Repositories
+│   └── Eloquent
+│       └── UserRepository.php
+├── Requests
+│   ├── LoginRequest.php
+│   └── RegisterRequest.php
+├── Routes
+│   ├── Api
+│   │   └── v1.php
+│   └── Web
+│       └── main.php
+├── Tasks
+│   ├── AssignUserRolesTask.php
+│   ├── CreateUserTask.php
+│   ├── ListAllUsersTask.php
+│   ├── LoginTask.php
+│   └── LogoutTask.php
+├── Tests
+│   └── Api
+│       ├── ListAllUsersTest.php
+│       ├── LoginTest.php
+│       ├── LogoutTest.php
+│       └── RegisterTest.php
+└── Transformers
+    └── UserTransformer.php
+</pre>
+
+**Modules Interaction**
+
+- `Controllers` can run `Tasks` from another `Module`.
+- `Models` can have relationship with other `Models` from different `Module`.
+
+
+
 <br>
-All the `Module` functionalities MUST be exposed via `Commands` and ONLY accessible via their `Commands`. *(We'll see what a Command is below)*.
-<br>
-Every `Module` MUST contain at least one `Command`. *(A Module can have one or many Commands)*.
-<br>
-`Modules` should not interact with each others directly, (the `Controllers` will control the interaction between `Modules`).
-<br>
-`Modules` can be reused across different projects. *(Think of them as third-party packages)*.
+<a name="Services"></a>
+###Services
 
-The main components of a **Module** are `Commands` and `Models`. 
-<br>
-The optional components can be `Repositories`, `Exceptions`, `Service Providers`, `Database Migrations`, `Adapters`, `Factories`, `Facades`, `Services`, `Traits` and anything else...
+The `Services` layer holds the reusable code between the different projects. 
 
+A `Service` can hold a business Logic, and it's the only way to ineract with Third-Party *'Vendor'* Packages. *(To Access any Third-Party Package functionlity, you must have a `Service`).*
 
-<br>
-<a name="Infrastructure"></a>
-###Infrastructure
+`Services` SHOULD be designed to be reused across different projects. *(Think of them as third-party packages)*.
 
-The **Infrastructure** layer is the glue between the application `Components` and the Framework.
+A `Service` SHOULD contain the reusable code between the `Modules`.
 
-The `Infrastructure` is what links everything with the framework (usually Infrastructure means the framework itself but in this case, it's the links to a framework).
-<br>
-The `Infrastructure` contains the reusable code between the `Modules` themselves and the `Interfaces` themselves. 
-<br>
-The `Infrastructure` separates the application code from the Framework code.
-<br>
-One of the major roles that the `Infrastructure` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
-
-The main components of the **Infrastructure** are `Abstracts`, `Service Providers`, `Traits` and `Exceptions`. 
-<br>
-The optional components can be `Database Criterias`, `Models Factories`.
+You can have any `Component` in a `Service` depend on the need. So unlike a `Module` every `Service` has a unique strucutre depend on it's functionality and role.
 
 
+**Core Services**
 
+The **Core** `Services` are the glue between the application `Modules` and the Framework. All the Module's `Compoenents` should extend or inherit from one of the **Core** `Services`. *(It separates the application code from the Framework code).*
 
+One of the major roles that the **Core** `Services` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
 
-<br>
-<a name="Layers-Diagram"></a>
-##Layers Diagram
+ 
+Here's an example of a `Core Service` structure:
 
-![](http://s29.postimg.org/amlftwh13/freestyle_architecture.png)
+<pre>
+├── Command
+│   ├── Abstracts
+│   │   └── Command.php
+│   └── Traits
+│       └── DispatcherTrait.php
+├── Controller
+│   ├── Abstracts
+│   │   └── ApiController.php
+│   └── Contracts
+│       └── ApiControllerInterface.php
+├── Exception
+│   ├── Abstracts
+│   │   └── ApiException.php
+│   └── Exceptions
+│       ├── InternalErrorException.php
+│       ├── UnsupportedFractalSerializerException.php
+│       └── ValidationFailedException.php
+├── Framework
+│   ├── Abstracts
+│   │   └── ServiceProvider.php
+│   ├── Migrations
+│   │   └── MySQL
+│   │       ├── 01_create_users_table.php
+│   ├── ModelsFactory
+│   │   └── ModelsFactory.php
+│   ├── Providers
+│   │   ├── ApiBaseRouteServiceProvider.php
+│   │   └── MasterServiceProvider.php
+│   └── Traits
+│       └── MasterServiceProviderTrait.php
+├── Model
+│   └── Abstracts
+│       └── Model.php
+├── Repository
+│   ├── Abstracts
+│   │   ├── Criteria.php
+│   │   └── Repository.php
+│   └── Criterias
+│       └── Eloquent
+│           ├── OrderByCreationDateDescendingCriteria.php
+│           └── ThisUserCriteria.php
+├── Request
+│   ├── Abstracts
+│   │   └── Request.php
+│   └── Manager
+│       └── HttpRequest.php
+├── Route
+│   └── Providers
+│       └── ApiRouteServiceProvider.php
+├── Task
+│   └── Abstracts
+│       └── Task.php
+├── Test
+│   ├── Abstracts
+│   │   └── TestCase.php
+│   └── Traits
+│       └── TestingTrait.php
+└── Transformer
+    └── Abstracts
+        └── Transformer.php
+</pre>
+
 
 
 
@@ -203,45 +301,33 @@ The optional components can be `Database Criterias`, `Models Factories`.
 
 <br>
 <a name="Components"></a>
-##Components
+##Main Components of a Module
 
-Each layer in the architecture consist of multiple components, we'll discuss each one apart. 
-<br>
-And we'll explain the role of each component and show how it can be used.
+Each `Module` consist of multiple `Components`, we'll discuss only the main `Components` of a `Module`. And we'll explain the role of each one and how it can be used:
+
+
+
+
 
 <br>
 <a name="Routes"></a>
 ###Routes
 
-The `Routes` are the first receivers (ports) of the Request.
+The `Routes` are the first receivers (ports) of the Request in a `Module`.
 
-Not all `Interface` need to have `Routes` like the **CLI** `Interface`.
-<br>
-However the **API** `Interface` is one of the Interfaces that requires to have `Routes` inside it.
-<br>
-The `Routes` `(A.K.A. Endpoints)` can be placed inside multiple routes files each representing a specific version like `(api.v1, api.v2)`
-<br>
-The `Route` main job is to call a particular `Controller` once a Request is made.
-<br>
-Each `Route` can represent a single API Endpoint.
-<br>
-Each `Route` SHOULD have a dedicated `Controller` for it. 
-<br>
-A `Route` SHOULD only call the `handle` Function on it's `Controller`.
+The `Routes` files can be **API**, **Web** or anything else.
 
-For more information about the `Routes` read [this](https://laravel.com/docs/routing/).
+A `Route` file contain multiple `Endpoints`.
+
+The `Endpoint ` main job is to call a particular `Controller` once a Request is made.
+
+Each `Endpoint` SHOULD have a dedicated `Controller` for it.
+
+An `Endpoint` SHOULD only call the `handle` Function on it's `Controller`.
 
 
 
-<br>
-<a name="Requests"></a>
-###Requests
 
-`Requests` are very useful to automatically apply the Validation rules. Once they are injected (in your `Controller`) they automatically check if the request data matches your validation rules, if not matched they throw an Exception immediately.
-<br>
-`Requests` class are very good place to write your validation rules. They can also be used to write your authorization code, to check if the user is authorized to make this request.
-
-For more information about the `Requests` check [this](https://laravel.com/docs/requests).
 
 
 
@@ -249,33 +335,43 @@ For more information about the `Requests` check [this](https://laravel.com/docs/
 <a name="Controllers"></a>
 ###Controllers
 
-`Controllers` are the same as in MVC, but their responsibilities are limited.
+`Controllers` are the same as in MVC, but their responsibilities are different.
 
-`Controllers` act as the relation between the `Interfaces` layer and the `Modules` layer (by dispatching the `Modules` `Commands`).
-<br>
-The `Controller` has three main roles the first is reading the request data (user input), second dispatching `Commands` (and passing that data) and third building a Response from whatever the command has returned.
-<br>
-`Controllers` SHOULD not have any form of business logic. (It dispatches `Commands` to perform a business logic).
-<br>
-A `Controller` can dispatch multiple `Commands`.
-<br>
-Each `Controller` can only respond to a single `Route` (so every controller SHOULD have a single function).
+A `Controller` has three main roles:
+
+1. reading the request data (user input)
+2. running one or multiple `Tasks` (and passing data to them) 
+3. building a Response (could be built from the data returned by the `Task`)
+
+`Controllers` SHOULD not have any form of business logic. (It SHOULD run a `Task` to perform a business logic).
+
+Each `Controller` can only respond to a single `Endpoint` .
+
+Every `Controller` SHOULD have a single function `handle`.
+
+
+
 
 
 
 <br>
-<a name="Commands"></a>
-###Commands
+<a name="Tasks"></a>
+###Tasks
 
-`Commands` are the Public API of the Module. 
+`Tasks` are responsible of performing whatever the User is asking for (Create, Update, Query,...).
 
-The `Module` exposes a Command per Functionality (each functionality provided by a `Module` should be presented as `Command`).
-<br>
-The `Command` can do anything inside it's `Module` (even executing another `Commands` from the same Module).
-<br>
-A `Command` can return `Data`, but SHOULD not return a response (the Controller job is to return a response).
-<br>
-The reusable code of the `Module` (reusable between different `Commands` in the same `Module`) can be extracted into `Services`.
+Each `Task` has single responsibility and is to handle specific Job.
+
+A `Task` class has one function `run` and can only be called from `Controllers`.
+
+A `Module` SHOULD have a `Task` per functionality (each functionality should be wrapped in a `Task`).
+
+The `Task` can do anything inside it's `Module`, and can use `Services`.
+
+A `Task` can receive and return `Data`. (`Tasks` SHOULD not return a response, the `Controller` job is to return a response).
+
+The `Tasks` concept is pretty much close to the `Commands` concept in a Command-Oriented Architecture.
+
 
 
 
@@ -285,9 +381,9 @@ The reusable code of the `Module` (reusable between different `Commands` in the 
 
 `Models` are objects representing data, in the database. (same as in MVC Architecture).
 
-Each `Model` SHOULD define the Relations between itself and any other `Model` (in case a relation exist).
+Each `Model` SHOULD define the Relations between itself and any other `Model` from other `Modules` (in case a relation exist).
 
-
+A `Model` SHOULD only hold code and data the represents itself.
 
 
 
@@ -295,12 +391,6 @@ Each `Model` SHOULD define the Relations between itself and any other `Model` (i
 
 <br>
 ___
-
-<a name="Folders-Structure"></a>
-##Folders Structure
-
-Coming Soon.
-
 
 <a name="Code-Sample"></a>
 ##Code Sample
@@ -316,8 +406,7 @@ Let's help Developers write better code. For an easier Developers life :)
 
 ## Credits
 
-- [Mahmoud Zalt](https://github.com/Mahmoudz)
-
+- [Mahmoud Zalt (Follow on Twitter)](https://twitter.com/Mahmoud_Zalt)
 
 ## License
 MIT
