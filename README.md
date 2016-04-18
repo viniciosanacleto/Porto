@@ -134,7 +134,7 @@ The Modules layer contains the Application specific business logic. *(Applicatio
 A Module can be named to the name of a Model, 
 (example In case of a TO DO App a `Task` would be a Module and a `User` is another Module).
 
-A typical Module would contain the following Components:
+A typical `Module` would contain the following `Components`:
 
 - Routes
 - Controllers
@@ -148,9 +148,9 @@ A typical Module would contain the following Components:
 - Contracts
 - Info
 
-Each of these components MUST be logically related to each other. 
+Each of these `Components` MUST be logically related to each other. 
 
-Here's an example of a real User Module structure:
+Here's an example of a real User `Module` structure:
 
 <pre>
 ├── Contracts
@@ -203,7 +203,7 @@ Here's an example of a real User Module structure:
 **Modules Interaction**
 
 - `Controllers` can run `Tasks` from another `Module`.
-- `Models` can have relationship with other `Models` from different `Module`.
+- `Models` can have relationship with other `Models` from different `Modules`.
 
 
 
@@ -229,7 +229,7 @@ The **Core** `Services` are the glue between the application `Modules` and the F
 One of the major roles that the **Core** `Services` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
 
  
-Here's an example of a `Core Service` structure:
+Here's an example of the `Core Service` structure:
 
 <pre>
 ├── Command
