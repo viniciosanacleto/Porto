@@ -17,10 +17,9 @@ It's designed to be **Modular**, **Agile** and **Easy** to understand. To help D
 ##Content
 
 - [Introduction](#Introduction)
-	- [General Information](#General-Information)
-	- [Quality Attributes](#Quality-Attributes)
+- [General Information](#General-Information)
+- [Quality Attributes](#Quality-Attributes)
 - [How it works](#How-it-works)
-- [Layers Diagram](#Layers-Diagram)
 - [Layers](#Layers)
 	- [Modules](#Modules)
 	- [Services](#Services)
@@ -97,18 +96,6 @@ The Request life cycle:
 
 
 <br>
-<a name="Layers-Diagram"></a>
-##Layers Diagram
-
-An updated one is coming soon..
-
-
-
-
-
-
-
-<br>
 <a name="Layers"></a>
 ##Layers
 
@@ -145,7 +132,7 @@ Each of these `Components` MUST be logically related to each other.
 **Modules Interaction**
 
 - `Controllers` can run `Tasks` from another `Module`.
-- `Models` can have relationship with other `Models` from different `Modules`.
+- `Models` can have relationship with `Models` from other `Modules`.
 
 
 
