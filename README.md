@@ -17,20 +17,20 @@ It's designed to be **Modular**, **Agile** and **Easy** to understand. To help D
 ##Content
 
 - [Introduction](#Introduction)
-	- [Quality Attributes](#Quality-Attributes)
-	- [Terminology](#Terminology)
-	- [Conventions](#Conventions)
 	- [General Information](#General-Information)
+	- [Quality Attributes](#Quality-Attributes)
 - [How it works](#How-it-works)
 - [Layers Diagram](#Layers-Diagram)
 - [Layers](#Layers)
 	- [Modules](#Modules)
 	- [Services](#Services)
-- [Main Components of a Module](#Components)
+- [Module's Main Components](#Components)
 	- [Routes](#Routes)
 	- [Controllers](#Controllers)
 	- [Tasks](#Tasks)
 	- [Models](#Models)
+- [Code-Samples](#Code-Samples)
+- [Terminology](#Terminology)
 
 <br>
 
@@ -41,8 +41,25 @@ It's designed to be **Modular**, **Agile** and **Easy** to understand. To help D
 
 
 
+
+
+<a name="General-Information"></a>
+##General Information
+
+The Freestyle Architecture is a way to structure the software by defining the relations between the application components of different layers.
+
+The main goal is to organise the code base, by thinking of actions in isolation and using the code as modelling tool.
+
+The Freestyle Architecture is very helpful for enterprise and long term projects, as these projects tends to have higher complexity with time.
+
+
+
+
+
+
+
 <a name="Quality-Attributes"></a>
-###Quality Attributes
+##Quality Attributes
 
 - Reusable Code (Modules of Business Logic).
 - Simple files and folders structure.
@@ -55,31 +72,6 @@ It's designed to be **Modular**, **Agile** and **Easy** to understand. To help D
 - Zero Code Decoupling.
 - Easy to understand by any developer (less magic, more readable code).
 
-
-
-<a name="Terminology"></a>
-###Terminology
-
-`Layer` is a logical term, used as indicate to the separation between things. In reality it's just a folder.
-
-`Component` is a class, that has specific responsibility.
-
-<a name="Conventions"></a>
-###Conventions
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [[RFC2119](http://tools.ietf.org/html/rfc2119)].
-
-
-
-
-<a name="General-Information"></a>
-###General Information
-
-The Freestyle Architecture is a way to structure the software by defining the relations between the application components of different layers.
-
-The main goal is to organise the code base, by thinking of actions in isolation and using the code as modelling tool.
-
-The Freestyle Architecture is very helpful for enterprise and long term projects, as these projects tends to have higher complexity with time.
 
 
 
@@ -150,60 +142,12 @@ A typical `Module` would contain the following `Components`:
 
 Each of these `Components` MUST be logically related to each other. 
 
-Here's an example of a real User `Module` structure:
-
-<pre>
-├── Contracts
-│   └── UserRepositoryInterface.php
-├── Controllers
-│   ├── Api
-│   │   ├── ListAllUsersController.php
-│   │   ├── LoginController.php
-│   │   ├── LogoutController.php
-│   │   └── RegisterController.php
-│   ├── Cli
-│   └── Web
-├── Exceptions
-│   └── AccountFailedException.php
-├── Info
-│   ├── dependancies.json
-│   └── readme.md
-├── Models
-│   └── User.php
-├── Providers
-│   ├── RoutesServiceProvider.php
-│   └── UserServiceProvider.php
-├── Repositories
-│   └── Eloquent
-│       └── UserRepository.php
-├── Requests
-│   ├── LoginRequest.php
-│   └── RegisterRequest.php
-├── Routes
-│   ├── Api
-│   │   └── v1.php
-│   └── Web
-│       └── main.php
-├── Tasks
-│   ├── AssignUserRolesTask.php
-│   ├── CreateUserTask.php
-│   ├── ListAllUsersTask.php
-│   ├── LoginTask.php
-│   └── LogoutTask.php
-├── Tests
-│   └── Api
-│       ├── ListAllUsersTest.php
-│       ├── LoginTest.php
-│       ├── LogoutTest.php
-│       └── RegisterTest.php
-└── Transformers
-    └── UserTransformer.php
-</pre>
-
 **Modules Interaction**
 
 - `Controllers` can run `Tasks` from another `Module`.
 - `Models` can have relationship with other `Models` from different `Modules`.
+
+
 
 
 
@@ -228,80 +172,13 @@ The **Core** `Services` are the glue between the application `Modules` and the F
 
 One of the major roles that the **Core** `Services` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
 
- 
-Here's an example of the `Core Service` structure:
-
-<pre>
-├── Command
-│   ├── Abstracts
-│   │   └── Command.php
-│   └── Traits
-│       └── DispatcherTrait.php
-├── Controller
-│   ├── Abstracts
-│   │   └── ApiController.php
-│   └── Contracts
-│       └── ApiControllerInterface.php
-├── Exception
-│   ├── Abstracts
-│   │   └── ApiException.php
-│   └── Exceptions
-│       ├── InternalErrorException.php
-│       ├── UnsupportedFractalSerializerException.php
-│       └── ValidationFailedException.php
-├── Framework
-│   ├── Abstracts
-│   │   └── ServiceProvider.php
-│   ├── Migrations
-│   │   └── MySQL
-│   │       ├── 01_create_users_table.php
-│   ├── ModelsFactory
-│   │   └── ModelsFactory.php
-│   ├── Providers
-│   │   ├── ApiBaseRouteServiceProvider.php
-│   │   └── MasterServiceProvider.php
-│   └── Traits
-│       └── MasterServiceProviderTrait.php
-├── Model
-│   └── Abstracts
-│       └── Model.php
-├── Repository
-│   ├── Abstracts
-│   │   ├── Criteria.php
-│   │   └── Repository.php
-│   └── Criterias
-│       └── Eloquent
-│           ├── OrderByCreationDateDescendingCriteria.php
-│           └── ThisUserCriteria.php
-├── Request
-│   ├── Abstracts
-│   │   └── Request.php
-│   └── Manager
-│       └── HttpRequest.php
-├── Route
-│   └── Providers
-│       └── ApiRouteServiceProvider.php
-├── Task
-│   └── Abstracts
-│       └── Task.php
-├── Test
-│   ├── Abstracts
-│   │   └── TestCase.php
-│   └── Traits
-│       └── TestingTrait.php
-└── Transformer
-    └── Abstracts
-        └── Transformer.php
-</pre>
-
-
 
 
 
 
 <br>
 <a name="Components"></a>
-##Main Components of a Module
+##Module's Main Components
 
 Each `Module` consist of multiple `Components`, we'll discuss only the main `Components` of a `Module`. And we'll explain the role of each one and how it can be used:
 
@@ -392,10 +269,35 @@ A `Model` SHOULD only hold code and data the represents itself.
 <br>
 ___
 
-<a name="Code-Sample"></a>
-##Code Sample
 
-Coming Soon. (Working in progress..)
+
+<a name="Code-Samples"></a>
+##Code Samples
+
+
+- [Hello API](https://github.com/Mahmoudz/Hello-API) (An API Starter built with PHP on top of Laravel 5.1)
+
+
+
+
+
+<a name="Terminology"></a>
+##Terminology
+
+`Layer` is a logical term, used as indicate to the separation between things. In reality it's just a folder.
+
+`Component` is a class, that has specific responsibility.
+
+
+
+
+
+<a name="Conventions"></a>
+##Conventions
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [[RFC2119](http://tools.ietf.org/html/rfc2119)].
+
+
 
 
 
