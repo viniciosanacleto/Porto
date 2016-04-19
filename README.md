@@ -12,12 +12,20 @@ The Freestyle Architecture is a clean and super easy to understand Software Arch
 It's designed to be **Modular**, **Agile** and **Easy** to understand. To help Developers write Scalable, Maintainable and Reusable Code.
 
 
+<br>
+
+The Freestyle Architecture is a way to structure the software by defining the relations between the application components of different layers.
+
+The main goal is to organise the code base, by thinking of actions in isolation and using the code as modelling tool.
+
+The Freestyle Architecture is very helpful for enterprise and long term projects, as these projects tends to have higher complexity with time.
+
+
 
 
 ##Content
 
 - [Introduction](#Introduction)
-- [General Information](#General-Information)
 - [Quality Attributes](#Quality-Attributes)
 - [How it works](#How-it-works)
 - [Layers](#Layers)
@@ -42,21 +50,6 @@ It's designed to be **Modular**, **Agile** and **Easy** to understand. To help D
 
 
 
-<a name="General-Information"></a>
-##General Information
-
-The Freestyle Architecture is a way to structure the software by defining the relations between the application components of different layers.
-
-The main goal is to organise the code base, by thinking of actions in isolation and using the code as modelling tool.
-
-The Freestyle Architecture is very helpful for enterprise and long term projects, as these projects tends to have higher complexity with time.
-
-
-
-
-
-
-
 <a name="Quality-Attributes"></a>
 ##Quality Attributes
 
@@ -76,7 +69,7 @@ The Freestyle Architecture is very helpful for enterprise and long term projects
 
 
 
-<br>
+
 <a name="How-it-works"></a>
 ##How it works
 
@@ -95,7 +88,7 @@ The Request life cycle:
 
 
 
-<br>
+
 <a name="Layers"></a>
 ##Layers
 
@@ -104,7 +97,10 @@ The Freestyle Architecture consist of only 2 layers `Modules` and `Services`. *(
 Each layer contain some components *(components are classes like Models and Controllers)*.
 
 
-<br>
+
+
+
+
 <a name="Modules"></a>
 ###Modules
 
@@ -138,7 +134,7 @@ Each of these `Components` MUST be logically related to each other.
 
 
 
-<br>
+
 <a name="Services"></a>
 ###Services
 
@@ -163,7 +159,9 @@ One of the major roles that the **Core** `Services` play, is facilitating the up
 
 
 
-<br>
+
+
+
 <a name="Components"></a>
 ##Module's Main Components
 
@@ -173,7 +171,10 @@ Each `Module` consist of multiple `Components`, we'll discuss only the main `Com
 
 
 
-<br>
+
+
+
+
 <a name="Routes"></a>
 ###Routes
 
@@ -195,7 +196,7 @@ An `Endpoint` SHOULD only call the `handle` Function on it's `Controller`.
 
 
 
-<br>
+
 <a name="Controllers"></a>
 ###Controllers
 
@@ -218,7 +219,7 @@ Every `Controller` SHOULD have a single function `handle`.
 
 
 
-<br>
+
 <a name="Tasks"></a>
 ###Tasks
 
@@ -239,7 +240,7 @@ The `Tasks` concept is pretty much close to the `Commands` concept in a Command-
 
 
 
-<br>
+
 <a name="Models"></a>
 ###Models
 
@@ -298,7 +299,8 @@ Let's help Developers write better code. For an easier Developers life :)
 - [Mahmoud Zalt (Follow on Twitter)](https://twitter.com/Mahmoud_Zalt)
 
 ## License
-MIT
+The MIT License (MIT)
+
 
 
 
