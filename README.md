@@ -129,6 +129,7 @@ Each of these `Components` MUST be logically related to each other.
 
 - `Controllers` can run `Tasks` from another `Module`.
 - `Models` can have relationship with `Models` from other `Modules`.
+- A `Module` can depend on another `Module` and on `Services`
 
 
 
@@ -155,7 +156,10 @@ The **Core** `Services` are the glue between the application `Modules` and the F
 
 One of the major roles that the **Core** `Services` play, is facilitating the upgrading of the framework in the future without affecting a single line of the Application business logic.
 
+**Services Interaction**
 
+- A `Service` SHOULD not use any other service.
+- `Services` will be used by Modules `Tasks`.
 
 
 
