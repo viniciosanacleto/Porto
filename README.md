@@ -336,7 +336,7 @@ When an HTTP request hits your Application, the Endpoints match with the URL pat
 - The API Routes files SHOULD be separated from the Web Routes files, each in its own folder.
 - The Web Routes folder will contain only the Web Endpoints, (accessible by Web browsers); And the API Routes folder will contain only the API Endpoints, (accessible by any consumer App).
 - Every Container SHOULD have its own Routes.
-- Every Route file SHOULD contain a single Endpoints.
+- Every Route file SHOULD contain a single Endpoint.
 - The Endpoint job is to call a function on the corresponding Controller once a request of any type is made. (It SHOULD NOT do anything else).
 
 
