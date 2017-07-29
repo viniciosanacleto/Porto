@@ -105,9 +105,9 @@ Porto benifits from both worlds it applies concepts from the Modular world in th
 
 ### Testability
 
-Writting testable code is high priority for Porto. Following the principles as advised will ensure you have easily testable code.
+Porto supports and encourage writting functional and unit tests. It's struture helps writting tests, and easily know what each test is testing. Porto come with tests folders at the root of each Container mainly for unit tests, and a functional tests folders in each UI folder, to test each UI separately.
 
-Porto includes Unit tests folders at the root of the Container. And also includes functional tests folders in each UI folder.
+Following the principles as advised will ensure you have easily testable code, for each peive of code without extra effort.
 
 
 ### Search-ability 
@@ -122,6 +122,9 @@ This allows you to find any Use Case (`Action`) in your code by just browsing th
 In Porto you can find any feature implementation in less than 3 seconds! (example: if you are looking for where the user address is being validated!, just go to the Address Container, open the list of Actions and search for ValidateUserAddressAction). 
 
 
+### Extensibility
+
+Porto's takes future growth into consideration and it ensures your code remains maintainable no matter how the project size become. It achieve this by its modular structure, and separation of concerns.
 
 
 
@@ -604,6 +607,8 @@ For feedbacks, questions or suggestions? We are on [**Slack**](https://now-examp
 
 <a id="Donations"></a>
 ## Donations
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mzalt)
 
 [![Beerpay](https://beerpay.io/apiato/apiato/badge.svg?style=beer-square)](https://beerpay.io/apiato/apiato)  
 [![Beerpay](https://beerpay.io/apiato/apiato/make-wish.svg?style=flat-square)](https://beerpay.io/apiato/apiato?focus=wish)
