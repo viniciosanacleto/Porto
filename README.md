@@ -163,26 +163,27 @@ The Containers (high-level code) relies *indirectly* on the Ship (low-level code
 
 ## Ship Layer:
 
-The Ship layer, contains the engine of the Ship which autoloads all the Components of your Containers. 
-It can also contain code that can be used by all your Containers Components.
+The Ship layer, contains code and classes to be used by all your Containers Components.
 
 The Ship layer, plays an important role in separating the Application code from the Framework code. 
 Thus it facilitates upgrading the Framework without affecting the Application code.
 
 In Porto the Ship layer is very slim, it doesn't contain common reusable functionalities such as Authentication or Authorization, all these functionalities live in their own separated Containers.
 
+The Ship layer can hold two different types of codes. The containers shared code (including all general or comon code between the Container) and the Core code (this code contains the logic that autoloads the container components and provide helper functions and more stuff related to the framework itself). It's highly recommended to separate this Core from the actual framework and make it an external package. In order to hide the internal framework magic from the custom Application.
 
 ### Ship Structure
 
 The Ship, contains:
 
-- **Engine**: is the engine that auto-register all your Container's Components and boots your Application.
-- **Parents**: contains the classes for each Component in your Container. (Adding functions to the parent classes makes them available in every Container).
-- **Other Folders**: each of the other folders provide reusable features to be used by all Containers. Example, Global Exceptions, Application Middleware's, Global Config files...
+- **Core**: is the engine that auto-register and auto-load all your Container's Components to boots your Application. It contains most of the magical code that handles everything that is not part of your business logic. And mostly contains code tbhat facilitate the development by extending the framework features. 
+- **Parents**: contains parent classes for each Component in your Container. (Adding functions to the parent classes makes them available in every Container). Parents are made to contain shared code between your Containers.
+- **Other Folders**: each of the other folders provide reusable features and classes to be used by all Containers. Such as, Global Exceptions, Application Middleware's, Global Config files, etc.
 
 Note: All the Container's Components MUST extend or inherit from the Ship layer *(in particular the Parents folder)*.
 
-
+When separating the **Core** to an external package, the Ship Parents should extend from the Core Parents (can be named Abstract, since most of the them supposed to be Abstract Classes). 
+The Ship Parents holds your custom Appliation shared business logic, while the Core Parents (Abstracts) holds your framework common code, basically anything that is not business logic shopuld be hidden from the actual Application being developed.
 
 
 <br>
