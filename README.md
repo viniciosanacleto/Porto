@@ -49,7 +49,7 @@ Porto inherits concepts from the MVC, DDD, Modular and Layered architectures. An
 
 <br>
 
-Feedbacks & Contributions are welcomed and credited. 
+Feedbacks & Contributions are welcomed and credited.
 
 **Let's make the developer's lives easier.**
 
@@ -83,48 +83,48 @@ Feedbacks & Contributions are welcomed and credited.
 
 Separation of concerns, is an important principle, Porto tries to follow.
 
-In Porto the Appliction is separated from the framework that it lives in. 
-And the business logic code is separated from infrastructure code, within the Appliction itself. 
+In Porto the Application is separated from the framework that it lives in.
+And the business logic code is separated from infrastructure code, within the Application itself.
 As well as, the UI's (user interfaces) are separated from each others within the business logic code itself.
 
-Making the UI's "`WEB`, `API`, `CLI`" pluggable, allows building the Web interface first and adding the API later or the opposite, with the least effort possible, since the `Actions` are the central organizing principle are they are shared accross UI's.
+Making the UI's "`WEB`, `API`, `CLI`" pluggable, allows building the Web interface first and adding the API later or the opposite, with the least effort possible, since the `Actions` are the central organizing principle are they are shared across UI's.
 
 
 ### Modularity
 
 In Porto, your application business logic lives in `Containers` (same as Modules & Domains & Layers) and interact with other Containers in pre-defined directions.
 
-In Porto, Containers are similar in concept to Modules *(from a Modular architectures)*. 
-However, Containers in Porto do cross the bounderies of a Module, due to the fact that they contain business logic which by nature involves a lot of dependencies and communications. 
+In Porto, Containers are similar in concept to Modules *(from a Modular architecture)*.
+However, Containers in Porto do cross the boundaries of a Module, due to the fact that they contain business logic which by nature involves a lot of dependencies and communications.
 
-At the core, Models have relationships with Models from different Containers. And Actions can call Tasks and SubActions from other Containers. It's the responsibility of the developer to minimize the relationships between the Containers, while Porto's rules and guidlines will help achieving that.
+At the core, Models have relationships with Models from different Containers. And Actions can call Tasks and SubActions from other Containers. It's the responsibility of the developer to minimize the relationships between the Containers, while Porto's rules and guidelines will help achieving that.
 
-In terms of dependancy management, the developer is free to move each Container to its own repository or keep all Containers together under single management. 
+In terms of dependency management, the developer is free to move each Container to its own repository or keep all Containers together under single management.
 
-Porto benifits from both worlds it applies concepts from the Modular world in the simple Monolithic world.
+Porto benefits from both worlds it applies concepts from the Modular world in the simple Monolithic world.
 
 ### Testability
 
-Porto supports and encourage writting functional and unit tests. It's struture helps writting tests, and easily know what each test is testing. Porto come with tests folders at the root of each Container mainly for unit tests, and a functional tests folders in each UI folder, to test each UI separately.
+Porto supports and encourage writing functional and unit tests. It's structure helps writing tests, and easily know what each test is testing. Porto comes with `tests` folders at the root of each Container mainly for unit tests, and a `functional tests` folder in each UI folder, to test each UI separately.
 
-Following the principles as advised will ensure you have easily testable code, for each peive of code without extra effort.
+Following the principles as advised will ensure you have easily testable code, for each piece of code without extra effort.
 
 
-### Search-ability 
+### Search-ability
 
 One of the biggest advantages of Porto, is the speed of finding a piece of code in a large code base.
 
-Usually, developers build classes with set of related functions. And then start making calls between those functions of different classes.. The bigger the code gets the harder it becomes to find a specific function or track a feature down.
+Usually, developers build classes with set of related functions. And then start making calls between those functions of different classes. The bigger the code gets the harder it becomes to find a specific function or track a feature down.
 
-In porto the biggest class consist of single function and it's always having the same name `run`. 
+In Porto the biggest class consist of single function and it's always having the same name `run`.
 This allows you to find any Use Case (`Action`) in your code by just browsing the files.
 
-In Porto you can find any feature implementation in less than 3 seconds! (example: if you are looking for where the user address is being validated!, just go to the Address Container, open the list of Actions and search for ValidateUserAddressAction). 
+In Porto you can find any feature implementation in less than 3 seconds! (example: if you are looking for where the user address is being validated - just go to the Address Container, open the list of Actions and search for ValidateUserAddressAction).
 
 
 ### Extensibility
 
-Porto's takes future growth into consideration and it ensures your code remains maintainable no matter how the project size become. It achieve this by its modular structure, and separation of concerns.
+Porto's takes future growth into consideration and it ensures your code remains maintainable no matter how the project size become. It achieves this by its modular structure, and separation of concerns.
 
 
 
@@ -138,7 +138,7 @@ These Layers (folders) can be created anywhere inside your framework of choice.
 *(example: in Laravel PHP you can place them in the `app/` directory or create an `src/` directory on the root)*
 
 
-The high-level code (Application Business Logic), should be written in the Container Layer. While the low-level code will live in the Ship Layer. 
+The high-level code (Application Business Logic), should be written in the Container Layer. While the low-level code will live in the Ship Layer.
 
 The Containers (high-level code) relies *indirectly* on the Ship (low-level code) to function. But not the opposite.
 
@@ -165,25 +165,25 @@ The Containers (high-level code) relies *indirectly* on the Ship (low-level code
 
 The Ship layer, contains code and classes to be used by all your Containers Components.
 
-The Ship layer, plays an important role in separating the Application code from the Framework code. 
+The Ship layer, plays an important role in separating the Application code from the Framework code.
 Thus it facilitates upgrading the Framework without affecting the Application code.
 
 In Porto the Ship layer is very slim, it doesn't contain common reusable functionalities such as Authentication or Authorization, all these functionalities live in their own separated Containers.
 
-The Ship layer can hold two different types of codes. The containers shared code (including all general or comon code between the Container) and the Core code (this code contains the logic that autoloads the container components and provide helper functions and more stuff related to the framework itself). It's highly recommended to separate this Core from the actual framework and make it an external package. In order to hide the internal framework magic from the custom Application.
+The Ship layer can hold two different types of codes. The containers shared code (including all general or common code between the Container) and the Core code (this code contains the logic that autoloads the container components and provide helper functions and more stuff related to the framework itself). It's highly recommended to separate this Core from the actual framework and make it an external package. In order to hide the internal framework magic from the custom Application.
 
 ### Ship Structure
 
 The Ship, contains:
 
-- **Core**: is the engine that auto-register and auto-load all your Container's Components to boots your Application. It contains most of the magical code that handles everything that is not part of your business logic. And mostly contains code tbhat facilitate the development by extending the framework features. 
+- **Core**: is the engine that auto-register and auto-load all your Container's Components to boots your Application. It contains most of the magical code that handles everything that is not part of your business logic. And mostly contains code that facilitate the development by extending the framework features.
 - **Parents**: contains parent classes for each Component in your Container. (Adding functions to the parent classes makes them available in every Container). Parents are made to contain shared code between your Containers.
 - **Other Folders**: each of the other folders provide reusable features and classes to be used by all Containers. Such as, Global Exceptions, Application Middleware's, Global Config files, etc.
 
-Note: All the Container's Components MUST extend or inherit from the Ship layer *(in particular the Parents folder)*.
+Note: All the Container's Components MUST extend or inherit from the Ship layer *(in particular the Parent's folder)*.
 
-When separating the **Core** to an external package, the Ship Parents should extend from the Core Parents (can be named Abstract, since most of the them supposed to be Abstract Classes). 
-The Ship Parents holds your custom Appliation shared business logic, while the Core Parents (Abstracts) holds your framework common code, basically anything that is not business logic shopuld be hidden from the actual Application being developed.
+When separating the **Core** to an external package, the Ship Parents should extend from the Core Parents (can be named Abstract, since most of the them supposed to be Abstract Classes).
+The Ship Parents holds your custom Application shared business logic, while the Core Parents (Abstracts) holds your framework common code, basically anything that is not business logic should be hidden from the actual Application being developed.
 
 
 <br>
@@ -197,10 +197,10 @@ The Containers layer is where the Application specific business logic is written
 Containers are wrappers of business logic.
 
 Here's an example of how to decide creating Containers.
-*"In a TODO App the Task, User and Calendar... each would be in it's own Container, were each has its own Routes, Controllers, Models, Exceptions, ect.. And each Container is responsible of receiving requests and returning responses from whichever UI (Web, API..) it support."*
+*"In a TODO App the Task, User and Calendar... each would be in their own Container, were each has its own Routes, Controllers, Models, Exceptions, etc. And each Container is responsible for receiving requests and returning responses from whichever UI (Web, API..) it supports."*
 
 It's advised to use Single Model per Container, however in some cases you might need more.
-Just keep in mind two Models means two Repositories, two Transformers, etc...
+Just keep in mind two Models means two Repositories, two Transformers, etc.
 Unless you want to use both Models always together, do split them into 2 Containers.
 
 
@@ -260,7 +260,7 @@ Container 2
 # Components Categories
 
 
-Every Container consist of a number of Components, in **Porto** the Components are splitted into two categories:
+Every Container consists of a number of Components, in **Porto** the Components are split into two categories:
 `Main Components` and
 `Optional Components`.
 
@@ -326,7 +326,7 @@ Below is the explanation of the roles, usage and principles of each Main Compone
 
 <a id="Routes"></a>
 ## Routes
- 
+
 Routes are the first receivers of the HTTP requests.
 
 The Routes are responsible for mapping all the incoming HTTP requests to their controller's functions.
@@ -367,11 +367,11 @@ The Controllers concept is the same as in MVC *(They are the C in MVC)*, but wit
 <a id="Requests"></a>
 ## Requests
 
-Requests mainly serves the user input in the application. And they are very useful to automatically apply the Validation and Authorization rules.
+Requests mainly serve the user input in the application. And they are very useful to automatically apply the Validation and Authorization rules.
 
-Requests are the best place to apply validations, since the validations rules will be related to every request. 
-Requests can also check of Authorization to check if this user has access to this controller function. 
-*(Example: check if this user own that product before deleting it, or check if this user is admin to do edit something).*
+Requests are the best place to apply validations, since the validations rules will be related to every request.
+Requests can also check the Authorization, e.g. check if this user has access to this controller function.
+*(Example: check if a specific user owns a product before deleting it, or check if this user is an admin to edit something).*
 
 #### Principles:
 - A Request MAY hold the Validation / Authorization rules.
@@ -383,7 +383,7 @@ Requests can also check of Authorization to check if this user has access to thi
 <a id="Actions"></a>
 ## Actions
 
-Actions represent the Use Cases of the Application *(the actions that can be taken by a User or a Software in the Application)*. 
+Actions represent the Use Cases of the Application *(the actions that can be taken by a User or a Software in the Application)*.
 
 Actions CAN hold business logic or/and they orchestrate the Tasks to perform the business logic.
 
@@ -391,7 +391,7 @@ Actions take data structures as inputs, manipulates them according to the busine
 
 Actions SHOULD NOT care how the Data is gathered, or how it will be represented.
 
-By just looking at the Actions folder of a Container, you can determine what Use Cases (features) your Container provides. 
+By just looking at the Actions folder of a Container, you can determine what Use Cases (features) your Container provides.
 And by looking at all the Actions you can tell what an Application can do.
 
 
@@ -401,7 +401,7 @@ And by looking at all the Actions you can tell what an Application can do.
 - An Action MAY retrieves data from Tasks and pass data to another Task.
 - An Action MAY call multiple Tasks. (They can even call Tasks from other Containers as well!).
 - Actions MAY return data to the Controller.
-- Actions SHOULD NOT return a response. (the Controller job is to return a response).
+- Actions SHOULD NOT return a response. (the Controller's job is to return a response).
 - An Action CAN call another Action (but it's recommended not to do that).
 - Actions are mainly used from Controllers. However, they can be used from Events, Commands and/or other Classes. But they SHOULD NOT be used from Tasks.
 - Every Action SHOULD have only a single function named `run()`.
@@ -412,13 +412,13 @@ And by looking at all the Actions you can tell what an Application can do.
 <a id="Tasks"></a>
 ## Tasks
 
-The Tasks are the classes that holds shared business logic between multiple Actions. 
+The Tasks are the classes that hold the shared business logic between multiple Actions.
 
-Every Task is responsible for little part of the logic.
+Every Task is responsible for a small part of the logic.
 
 Tasks are optional, but in most cases you find yourself in need for them.
 
-Example: Let's say we have an Action 1 that needs to find a record by its ID from the DB, then fires an Event and pass the record data to it. 
+Example: Let's say we have an Action 1 that needs to find a record by its ID from the DB, then fires an Event and pass the record data to it.
 And we have an Action 2 that needs to find the same record by its ID then makes a call to an API and pass the record data to it.
 Since both actions are performing the "find a record by ID" job, it would be much better to have a task the does this job and returns that record.
 
@@ -429,11 +429,11 @@ Whenever you see the possibility of reusing a piece of code from an Action, you 
 
 #### Principles:
 - Every Task SHOULD have a single responsibility (job).
-- An Action MAY receive and return Data. (Actions SHOULD NOT return a response, the Controller job is to return a response).
+- An Action MAY receive and return Data. (Actions SHOULD NOT return a response, the Controller's job is to return a response).
 - A Task SHOULD NOT call another Task. Because that will takes us back to the Services Architecture and it's a big mess.
 - A Task SHOULD NOT call an Action. Because your code wouldn't make any logical sense then!
 - Tasks SHOULD only be called from Actions. (They could be called from Actions of other Containers as well!).
-- Tasks usually need a single function `run`. However, if you prefer you can have more than one function, but make sure to explicitly name them "example: `FindUserTask` can have 2 functions `byId` and `byEmail`". 
+- Tasks usually need a single function `run`. However, if you prefer you can have more than one function, but make sure to explicitly name them "example: `FindUserTask` can have 2 functions `byId` and `byEmail`".
 - A Task SHOULD NOT be called from Controller. Because this leads to non-documented feature in your code. It's totally fine to have a lot of Actions "example: `FindUserByIdAction` and `FindUserByEmailAction` where both Actions are calling the same Task" as well as it's totally fine to have single Action `FindUserAction` making a decision to which Task it should call.
 
 
@@ -447,37 +447,37 @@ Models are responsible for how the data should be handled. They make sure that d
 #### Principles:
 - A Model SHOULD NOT hold business logic, it can only hold the code and data the represents itself. *(it's relationships with other models, hidden fields, table name, fillable attributes,...)*
 - A single Container MAY contains multiple Models.
-- Model MAY define the Relations between itself and any other Models (in case a relation exist).
+- A Model MAY define the Relations between itself and any other Models (in case a relation exist).
 
 
 
 <a id="Views"></a>
 ## Views
 
-Views contain the HTML served by your application. 
+Views contain the HTML served by your application.
 
 Their main goal is to separate the application logic from the presentation logic. *(They are the V in MVC)*.
 
 #### Principles:
 - Views can only be used from the Web Controllers.
-- View SHOULD be separated into multiple files and folders based on what they display.
+- Views SHOULD be separated into multiple files and folders based on what they display.
 - A single Container MAY contains multiple Views files.
 
 
 <a id="Transformers"></a>
 ## Transformers
 
-Transformers (are the short name for Responses Transformers). 
+Transformers (are the short name for Responses Transformers).
 
-They are the same like Views but for JSON Responses. While Views takes data and represent it in HTML, Transformers takes data and represent it in JSON.
+They are equivalent to Views but for JSON Responses. While Views takes data and represent it in HTML, Transformers takes data and represent it in JSON.
 
-Transformers are classes responsible for transforming Models into an Arrays.
+Transformers are classes responsible for transforming Models into Arrays.
 
 Transformers takes a Model or a group of Models "Collection" and converts it to a formatted serializable Array.
 
 
 #### Principles:
-- All API responses MUST be formatted via a Transformer.
+- All API responses MUST be formatted via Transformers.
 - Every Model (that gets returned by an API call) SHOULD have a Transformer.
 - A single Container MAY have multiple Transformers.
 - Usually every Model would have a Transformer.
@@ -490,7 +490,7 @@ Transformers takes a Model or a group of Models "Collection" and converts it to 
 
 SubActions are designed eliminate code duplication in Actions. Don't get confused! SubActions do not replace Tasks.
 
-While Tasks allows Actions to share a piece of functionality. SubActions allows Actions to share a seequence of Tasks.
+While Tasks allows Actions to share a piece of functionality. SubActions allows Actions to share a sequence of Tasks.
 
 *Example: If an Action is calling Task1, Task2 and Task3. And another Action is calling Task2, Task3 and Task4. (And both Actions are throwing the same Exception when Task2 returns `Foo`). Would be very useful to extract that code into a SubAction, and make it reusable.*
 
@@ -523,7 +523,7 @@ Container
 	├── Tasks
 	├── Models
 	├── Events
-	├── Policies	
+	├── Policies
 	├── Exceptions
 	├── Contracts
 	├── Traits
