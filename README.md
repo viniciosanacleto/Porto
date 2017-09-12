@@ -531,12 +531,16 @@ Container
 	├── Notifications
 	├── Providers
 	├── Configs
+	├── Mails
+	│   ├── Templates	
 	├── Data
 	│   ├── Migrations
 	│   ├── Seeders
 	│   ├── Factories
 	│   ├── Criterias
-	│   └── Repositories
+	│   ├── Repositories
+	│   ├── Validators
+	│   └── Rules
 	├── Tests
 	│   ├── Unit
 	│   └── Traits
