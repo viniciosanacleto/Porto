@@ -43,8 +43,9 @@ Porto is a great alternatives to the standard MVC, for large and long term proje
 
 Porto inherits concepts from the MVC, DDD, Modular and Layered architectures. And it adheres to a list of convenient design principles such as SOLID, OOP, LIFT, DRY, CoC, GRASP, Generalization, High Cohesion and Low Coupling.
 
-> Porto started as an experimental architecture, trying to solve the common problems developers face, when building medium to large web projects. While all modular architectures focuses on the reusability of the framework general components, Porto focuses on the reusability of the business logic.
+Porto started as an experimental architecture, trying to solve the common problems developers face, when building medium to large web projects. While all modular architectures focuses on the reusability of the framework general functionality, Porto focuses on the reusability of the business logic as a block.
 
+> "Simplicity is prerequisite for reliability.” — Edsger Dijkstra  
 
 
 <br>
@@ -81,14 +82,19 @@ Feedbacks & Contributions are welcomed and credited.
 
 ### Decoupling
 
-Separation of concerns, is an important principle, Porto tries to follow.
+Separation of concerns, is an important principle, Porto tries to adhere to.
 
-In Porto the Application is separated from the framework that it lives in.
+In Porto your Application code is separated from the framework code.
 And the business logic code is separated from infrastructure code, within the Application itself.
-As well as, the UI's (user interfaces) are separated from each others within the business logic code itself.
+*The business logic gets wrapped in Containers, while the infrastructure logic, lives in the Ship layer.*
+As well as, the UI's (user interfaces) are separated from each others within each business logic unit of code "Container" itself.
 
 Making the UI's "`WEB`, `API`, `CLI`" pluggable, allows building the Web interface first and adding the API later or the opposite, with the least effort possible, since the `Actions` are the central organizing principle are they are shared across UI's.
 
+Code Levels:
+- **Low-level code**: the framework code (implements basic operations like reading files from a disk, or interacting with a database). Usually lives in the Vendor directory. 
+- **Mid-level code**: the application general code (implements functionality that serves the High-level code. And it relies on the Low-level code to function). Should be in the App/Ship directory.
+- **High-level code**: the business logic code (encapsulates complex logic and relies on the Mid-level code to function). Should be in the App/Containers directory.
 
 ### Modularity
 
@@ -109,7 +115,6 @@ Porto supports and encourage writing functional and unit tests. It's structure h
 
 Following the principles as advised will ensure you have easily testable code, for each piece of code without extra effort.
 
-
 ### Search-ability
 
 One of the biggest advantages of Porto, is the speed of finding a piece of code in a large code base.
@@ -120,7 +125,6 @@ In Porto the biggest class consist of single function and it's always having the
 This allows you to find any Use Case (`Action`) in your code by just browsing the files.
 
 In Porto you can find any feature implementation in less than 3 seconds! (example: if you are looking for where the user address is being validated - just go to the Address Container, open the list of Actions and search for ValidateUserAddressAction).
-
 
 ### Extensibility
 
@@ -138,9 +142,9 @@ These Layers (folders) can be created anywhere inside your framework of choice.
 *(example: in Laravel PHP you can place them in the `app/` directory or create an `src/` directory on the root)*
 
 
-The high-level code (Application Business Logic), should be written in the Container Layer. While the low-level code will live in the Ship Layer.
+The high-level code (Application Business Logic), should be placed in the Container Layer. While the mid-level code should be placed in the Ship Layer.
 
-The Containers (high-level code) relies *indirectly* on the Ship (low-level code) to function. But not the opposite.
+The Containers (high-level code) relies *indirectly* on the Ship (low-level code) to function, through the Ship layer (mid-level code). But not the opposite.
 
 
 <a id="Layers-Diagram"></a>
