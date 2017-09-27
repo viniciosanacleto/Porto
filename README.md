@@ -41,9 +41,11 @@
 
 Porto is a great alternatives to the standard MVC, for large and long term projects, as they tend to have higher complexity over time.
 
-Porto inherits concepts from the MVC, DDD, Modular and Layered architectures. And it adheres to a list of convenient design principles such as SOLID, OOP, LIFT, DRY, CoC, GRASP, Generalization, High Cohesion and Low Coupling.
+Porto inherits concepts from the MVC, DDD, ADR, Modular and Layered architectures. And it adheres to a list of convenient design principles such as SOLID, OOP, LIFT, DRY, CoC, GRASP, Generalization, High Cohesion and Low Coupling.
 
-Porto started as an experimental architecture, trying to solve the common problems developers face, when building medium to large web projects. While all modular architectures focuses on the reusability of the framework general functionality, Porto focuses on the reusability of the business logic as a block.
+
+Porto started as an experimental architecture, trying to solve the common problems developers face, when building medium to large web projects. While all modular architectures focuses on the reusability of the framework general functionality, Porto focuses on the reusability of the business logic itself.
+
 
 > "Simplicity is prerequisite for reliability.” — Edsger Dijkstra  
 
@@ -56,25 +58,23 @@ Feedbacks & Contributions are welcomed and credited.
 
 
 <a id="Quality-Attributes"></a>
-# Quality Attributes
+# Advantages of using Porto (Quality Attributes):
 
-- Reusable Business Logic (Containers) across multiple similar projects.
-- Easy to understand by any developer (No magic).
-- Easy to maintain (easy to adapt changes).
-- Easy to Test (test driven).
-- Zero Technical debt (low communication between Developers).
-- Decoupled Code (editing X doesn’t break Y).
-- Pluggable UI, (start with Web App now and build an API later, or the opposite)
-- Very Organized Code base with Zero Code Decoupling.
-- Scalable Code (easy to modify and implement features).
-- Easy Framework Upgrade (complete separation between the App and the Framework).
-- Easy to locate any functionality.
-- Organized coupling between the internal Components.
-- Slim Classes (by following the Single Responsibility Principle).
-- Uses the domain expert language when naming the Components.
-- Clean and clear development workflow.
-
-
+- Reusability of business logic (Containers) across multiple similar projects.
+- Easy to maintain and test (quickly modify existing features and debug your code).
+- Zero technical debt (low communication between developers).
+- Pluggable optional UI's in each Container, (start with Web App now and build an API later, or the opposite).
+- Decoupled code (editing X doesn’t break Y).
+- Separated business logic in multiple Container.
+- Scalable code (easy to modify and implement new features).
+- Easy framework upgrade (complete separation between the App and the framework via the Ship layer).
+- Easy to locate any feature/functionality. And to understand what's happening inside it.
+- Organized coupling between the internal classes "Components".
+- Slim classes "treating classes as functions" (extremely adhering to the single responsibility principle).
+- Uses the domain expert language when naming the classes "components".
+- Clear development workflow with predefined data flow and dependencies direction.
+- Very organized code base with zero code decoupling.
+- Easy to understand by any developer (no magic).
 
 
 ## Some of Porto's features in short details:
@@ -258,6 +258,11 @@ Container 2
 - A Model MAY have a relationship with a Model from other Containers.
 
 
+
+Note: If you're not familiar with separating your code into Modules/Domains, or for some reason you don't prefer that approach. You can create your entire Application in a single Container. (Not recommended but possible).
+
+
+
 <br>
 <a id="Components-Categories"></a>
 
@@ -299,9 +304,9 @@ Routes - Controllers - Requests - Actions - Tasks - Models - Views - Transformer
 3. `Endpoint` calls its `Controller` function.
 4. `Request` injected in the `Controller` automatically applies the request validation & authorization rules.
 5. `Controller` calls an `Action` and pass each `Request` data to it.
-6. `Action` calls multiple `Tasks` to perform the business logic, *{or it handles all the job itself}*.
-7. `Tasks` performs the business logic (every `Task` does a single portion of the main Action).
-8. `Action` collects data from the `Tasks` and returns them to the `Controller`.
+6. `Action` do the business logic, *OR can call as many `Tasks` as needed to do the reusable subsets of the business logic*.
+7. `Tasks` do a reusable subsets of the business logic (A `Task` can do a single portion of the main Action).
+8. `Action` prepares data to be returned to the `Controller`, *some data can be collected from the `Tasks`*.
 9. `Controller` builds the response using a (`View` or `Transformer`) and send it back to the **User**.
 
 
@@ -351,7 +356,7 @@ When an HTTP request hits your Application, the Endpoints match with the URL pat
 <a id="Controllers"></a>
 ## Controllers
 
-Controllers are responsible for serving the request data and building responses.
+Controllers are responsible for validating the request, serving the request data and building a response. *Validation and response, happens in separate classes, but triggered from the Controller*.
 
 The Controllers concept is the same as in MVC *(They are the C in MVC)*, but with limited and predefined responsibilities.
 
@@ -366,7 +371,14 @@ The Controllers concept is the same as in MVC *(They are the C in MVC)*, but wit
 - Controllers CAN be called by Routes Endpoints only.
 - Every Container UI folder (Web, API, CLI) will have its own Controllers.
 
+You may wonder why we need the Controller! when we can directly call the Action from the Route. The Controller layer helps making the Action reusable in multiple UI's (Web & API), since it doesn't build a response, and that reducses the amount of code duplication accross different UI's.
 
+Here's an example below:
+
+- UI (Web): Route `W-R1` -> Controller `W-C1` -> Action `A1`.
+- UI (API): Route `A-R1` -> Controller `A-C1` -> Action `A1`.
+
+As you can see in the example above the Action `A1` was used by both routes `W-R1` and `A-R1`, with the help of the Controllers layer that lives in each UI.
 
 <a id="Requests"></a>
 ## Requests
@@ -405,10 +417,11 @@ And by looking at all the Actions you can tell what an Application can do.
 - An Action MAY retrieves data from Tasks and pass data to another Task.
 - An Action MAY call multiple Tasks. (They can even call Tasks from other Containers as well!).
 - Actions MAY return data to the Controller.
-- Actions SHOULD NOT return a response. (the Controller's job is to return a response).
-- An Action CAN call another Action (but it's recommended not to do that).
-- Actions are mainly used from Controllers. However, they can be used from Events, Commands and/or other Classes. But they SHOULD NOT be used from Tasks.
+- Actions SHOULD NOT return a response. (The Controller's job is to return a response).
+- An Action SHOULD NOT call another Action (If you need to reuse a big chunk of business logic in multiple Actions, and this chunk is calling some Tasks, you can create a SubAction). See the SubAction section below.
+- Actions are mainly used from Controllers. However, they can be used from Events Listeners, Commands and/or other Classes. But they SHOULD NOT be used from Tasks.
 - Every Action SHOULD have only a single function named `run()`.
+- The Action main function `run()` can accept a Request Object in the parameter.
 
 
 
@@ -416,17 +429,17 @@ And by looking at all the Actions you can tell what an Application can do.
 <a id="Tasks"></a>
 ## Tasks
 
-The Tasks are the classes that hold the shared business logic between multiple Actions.
+The Tasks are the classes that hold the shared business logic between multiple Actions accross different Containers.
 
 Every Task is responsible for a small part of the logic.
 
 Tasks are optional, but in most cases you find yourself in need for them.
 
-Example: Let's say we have an Action 1 that needs to find a record by its ID from the DB, then fires an Event and pass the record data to it.
-And we have an Action 2 that needs to find the same record by its ID then makes a call to an API and pass the record data to it.
-Since both actions are performing the "find a record by ID" job, it would be much better to have a task the does this job and returns that record.
+Example: if you have Action 1 that needs to find a record by its ID from the DB, then fires an Event.
+And you have an Action 2 that needs to find the same record by its ID, then makes a call to an external API.
+Since both actions are performing the "find a record by ID" logic, we can take that business logic and put it in it's own class, that class is the Task. This Task is now reusable by both Actions and any other Action you might create in the future.
 
-Whenever you see the possibility of reusing a piece of code from an Action, you should put that piece of code in a Task.
+The rule is, whenever you see the possibility of reusing a piece of code from an Action, you should put that piece of code in a Task. Do not blindly create Tasks for everything, you can always start with writing all the business logic in an Action and only when you need to reuse it, create an a dedicated Task for it. (Refactoring is essential to adapt to the code growth).
 
 
 
@@ -434,11 +447,13 @@ Whenever you see the possibility of reusing a piece of code from an Action, you 
 #### Principles:
 - Every Task SHOULD have a single responsibility (job).
 - An Action MAY receive and return Data. (Actions SHOULD NOT return a response, the Controller's job is to return a response).
+
 - A Task SHOULD NOT call another Task. Because that will takes us back to the Services Architecture and it's a big mess.
 - A Task SHOULD NOT call an Action. Because your code wouldn't make any logical sense then!
 - Tasks SHOULD only be called from Actions. (They could be called from Actions of other Containers as well!).
-- Tasks usually need a single function `run`. However, if you prefer you can have more than one function, but make sure to explicitly name them "example: `FindUserTask` can have 2 functions `byId` and `byEmail`".
-- A Task SHOULD NOT be called from Controller. Because this leads to non-documented feature in your code. It's totally fine to have a lot of Actions "example: `FindUserByIdAction` and `FindUserByEmailAction` where both Actions are calling the same Task" as well as it's totally fine to have single Action `FindUserAction` making a decision to which Task it should call.
+- Tasks usually have a single function `run()`. However, they can have more functions with explicit names if needed. *Making the Task class replace the ugly concept of function flags.* Example: the `FindUserTask` can have 2 functions `byId` and `byEmail`, **all internal functions MUST call the `run` function**. In this example the `run` can be called at the end of both funtions, after appending Criterias to the repository.
+- A Task SHOULD NOT be called from Controller. Because this leads to non-documented features in your code. It's totally fine to have a lot of Actions "example: `FindUserByIdAction` and `FindUserByEmailAction` where both Actions are calling the same Task" as well as it's totally fine to have single Action `FindUserAction` making a decision to which Task it should call.
+- A Task SHOULD NOT accept a Request object in any of its functions. It can take anything in its funtions parameters but never a Request object. This will keep free to use from anwyhere, and can be tested independently.
 
 
 <a id="Models"></a>
@@ -496,12 +511,15 @@ SubActions are designed eliminate code duplication in Actions. Don't get confuse
 
 While Tasks allows Actions to share a piece of functionality. SubActions allows Actions to share a sequence of Tasks.
 
-*Example: If an Action is calling Task1, Task2 and Task3. And another Action is calling Task2, Task3 and Task4. (And both Actions are throwing the same Exception when Task2 returns `Foo`). Would be very useful to extract that code into a SubAction, and make it reusable.*
+The SubActions are created to solve a problem. The problem is:
+Sometimes you need to reuse a big chunk of business logic in multiple Actions. That chunk of code is already calling some Tasks. *(Remember a Task SHOULD NOT call other Tasks)* so how shall you reuse that chunk of code without creating a Task! The solution is create a SubAction.
+
+Detailed Example: assuming an Action `A1` is calling Task1, Task2 and Task3. And another Action `A2` is calling Task2, Task3, Task4 and Task5. Notice both Actions are calling Tasks 2 and 3. To eliminate code duplication we can create a SubAction that contains all the common code between both Actions.
 
 
 
 #### Principles:
-- Sub-Actions MUST call Tasks. If a Sub-Actions is doing all the business logic, without the help of at least 1 Tasks (recommended 2 minimum), It probably shouldn't be a Sub-Action.
+- Sub-Actions MUST call Tasks. If a Sub-Actions is doing all the business logic, without the help of at least 1 Tasks, it probably shouldn't be a Sub-Action but a Task instead.
 - A Sub-Action MAY retrieves data from Tasks and pass data to another Task.
 - A Sub-Action MAY call multiple Tasks. (They can even call Tasks from other Containers as well!).
 - Sub-Actions MAY return data to the Action.
