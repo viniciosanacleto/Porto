@@ -371,7 +371,7 @@ The Controllers concept is the same as in MVC *(They are the C in MVC)*, but wit
 - Controllers CAN be called by Routes Endpoints only.
 - Every Container UI folder (Web, API, CLI) will have its own Controllers.
 
-You may wonder why we need the Controller! when we can directly call the Action from the Route. The Controller layer helps making the Action reusable in multiple UI's (Web & API), since it doesn't build a response, and that reducses the amount of code duplication accross different UI's.
+You may wonder why we need the Controller! when we can directly call the Action from the Route. The Controller layer helps making the Action reusable in multiple UI's (Web & API), since it doesn't build a response, and that reduces the amount of code duplication accross different UI's.
 
 Here's an example below:
 
