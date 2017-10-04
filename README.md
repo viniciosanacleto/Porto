@@ -82,14 +82,15 @@ Feedbacks & Contributions are welcomed and credited.
 
 ### Decoupling
 
-Separation of concerns, is an important principle, Porto tries to adhere to.
+Separation of concerns, is an important principle, Porto adheres to.
 
 In Porto your Application code is separated from the framework code.
-And the business logic code is separated from infrastructure code, within the Application itself.
-*The business logic gets wrapped in Containers, while the infrastructure logic, lives in the Ship layer.*
-As well as, the UI's (user interfaces) are separated from each others within each business logic unit of code "Container" itself.
 
-Making the UI's "`WEB`, `API`, `CLI`" pluggable, allows building the Web interface first and adding the API later or the opposite, with the least effort possible, since the `Actions` are the central organizing principle are they are shared across UI's.
+The business logic code is separated from infrastructure code, within the Application itself. *The business logic is wrapped in Containers, while the infrastructure logic, lives in the Ship layer.*
+
+The UI's (user interfaces) are separated from the Application business logic and separated from each others within each Container.
+
+Making the UI's (`WEB`, `API` & `CLI`) pluggable, allows writting the business logic of your application first, then implement a UI to interact with your code. It also gives flexibility to supporting interfaces when needed (example: start with Web interface then open an API later), with the least effort possible. This is all possible because the `Actions` are the central organizing principle "not the controller" which are shared across multiple UI's.
 
 Code Levels:
 - **Low-level code**: the framework code (implements basic operations like reading files from a disk, or interacting with a database). Usually lives in the Vendor directory. 
