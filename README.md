@@ -319,7 +319,7 @@ Routes - Controllers - Requests - Actions - Tasks - Models - Views - Transformer
 
 You can add these Components when you need them, based on your App needs, however some of them are highly recommended:
 
-Repositories - Exceptions - Criterias - Policies - Tests - Middlewares - Service Providers - Events - Commands - DB Migrations - DB Seeders - Data Factories - Contracts - Traits - Jobs - ValueObjects - Mails - Notifications...
+Repositories - Exceptions - Criteria - Policies - Tests - Middlewares - Service Providers - Events - Commands - DB Migrations - DB Seeders - Data Factories - Contracts - Traits - Jobs - ValueObjects - Mails - Notifications...
 
 
 
