@@ -151,14 +151,11 @@ The Containers (high-level code) relies *indirectly* on the Ship (low-level code
 <a id="Layers-Diagram"></a>
 ## Layers Diagram
 
-
-![](https://s19.postimg.org/cgh6yqtn7/porto_layers.png)
+![](/assets/porto_layers.png)
 
 #### Visual Image:
 
-![](https://s19.postimg.org/d79x4iw0j/porto_visual_diagram.png)
-
-
+![](/assets/porto_visual_diagram.png)
 
 
 
