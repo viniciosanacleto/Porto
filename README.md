@@ -305,7 +305,7 @@ Routes - Controllers - Requests - Actions - Tasks - Models - Views - Transformer
 6. `Action` do the business logic, *OR can call as many `Tasks` as needed to do the reusable subsets of the business logic*.
 7. `Tasks` do a reusable subsets of the business logic (A `Task` can do a single portion of the main Action).
 8. `Action` prepares data to be returned to the `Controller`, *some data can be collected from the `Tasks`*.
-9. `Controller` builds the response using a (`View` or `Transformer`) and send it back to the **User**.
+9. `Controller` builds the response using a `View` (or `Transformer`) and send it back to the **User**.
 
 
 
