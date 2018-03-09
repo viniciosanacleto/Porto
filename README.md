@@ -3,19 +3,26 @@
 ## Welcome to Porto
 
 - [Introduction](#Introduction)
-- [Quality Attributes](#Quality-Attributes)
+	- [Quality Attributes](#Quality-Attributes)
+	- [Benefits](#Porto-Benefits)
+		- [Decoupling](#Decoupling)
+		- [Modularity](#Modularity)
+		- [Testability](#Testability)
+		- [Search-ability](#Search-ability)
+		- [Extensibility](#Extensibility)
 - [Layers](#layers)
 	- [Layers Diagram](#Layer-Diagram)
 	- [Ship Layer](#Ship-Layer)
 	- [Containers Layer](#Containers-Layer)
 		- [Structure](#Containers-Structure)
 		- [Interactions](#Containers-Interactions)
-		- [Example](#Containers-Example)
-- [Components Categories](#Components-Categories)
-	- [Main Components](#Main-Components)
-		- [Components Interaction Diagram](#Components-Interaction-Diagram)
-		- [Request Life Cycle](#Request-Life-Cycle)
-	- [Optional Components](#Optional-Components)
+		- [Sections](#Containers-Sections)
+- [Components](#Components)
+	- [Components Categories](#Components-Categories)
+		- [Main Components](#Main-Components)
+			- [Components Interaction Diagram](#Components-Interaction-Diagram)
+			- [Request Life Cycle](#Request-Life-Cycle)
+		- [Optional Components](#Optional-Components)
 - [Main Components Definitions & Principles](#Components-Details)
 	- [Routes](#Routes)
 	- [Controllers](#Controllers)
@@ -26,11 +33,9 @@
 	- [Views](#Views)
 	- [Transformers](#Transformers)
 	- [Sub-Actions](#Sub-Actions)
-- [Container Example](#Container-Example)
-- [Projects](#Projects)
+- [Typical Container Structure](#Typical-Container-Structure)
+- [Implementations](#Implementations-Projects)
 - [Feedback & Questions](#Feedback)
-- [Credits](#Credits)
-- [License](#License)
 
 
 
@@ -58,7 +63,9 @@ Feedbacks & Contributions are welcomed and credited.
 
 
 <a id="Quality-Attributes"></a>
-# Advantages of using Porto (Quality Attributes):
+## Quality Attributes:
+
+#### Advantages of using Porto:
 
 - Reusability of business logic (Containers) across multiple similar projects.
 - Easy to maintain and test (quickly modify existing features and debug your code).
@@ -76,27 +83,31 @@ Feedbacks & Contributions are welcomed and credited.
 - Very organized code base with zero code decoupling.
 - Easy to understand by any developer (no magic).
 
+<a id="Porto-Benefits"></a>
+## Porto Benefits:
 
-## Some of Porto's features in short details:
-
-
+<a id="Decoupling"></a>
 ### Decoupling
 
-Separation of concerns, is an important principle, Porto adheres to.
+Separation of concerns, is an important principle Porto adheres to. 
 
-In Porto your Application code is separated from the framework code.
+Thus the application code is separated from the framework code. 
 
-The business logic code is separated from infrastructure code, within the Application itself. *The business logic is wrapped in Containers, while the infrastructure logic, lives in the Ship layer.*
+The business logic is wrapped in different Containers. And Containers are groupped into Sections *(each Section contains a portion of your application business logic)*. 
 
-The UI's (user interfaces) are separated from the Application business logic and separated from each others within each Container.
+Containers are separated from the infrastructure code (Parent classes and Utility Code), within the Application itself. *The infrastructure logic lives in the Ship layer far from the Cointainer Layer which can contain Containers at its root or can group related Containers into Sections.*
+
+The UI's (user interfaces) are separated from the application business logic and separated from each others within each Container.
 
 Making the UI's (`WEB`, `API` & `CLI`) pluggable, allows writting the business logic of your application first, then implement a UI to interact with your code. It also gives flexibility to supporting interfaces when needed (example: start with Web interface then open an API later), with the least effort possible. This is all possible because the `Actions` are the central organizing principle "not the controller" which are shared across multiple UI's.
 
-Code Levels:
+
+##### Code Levels:
 - **Low-level code**: the framework code (implements basic operations like reading files from a disk, or interacting with a database). Usually lives in the Vendor directory. 
 - **Mid-level code**: the application general code (implements functionality that serves the High-level code. And it relies on the Low-level code to function). Should be in the App/Ship directory.
 - **High-level code**: the business logic code (encapsulates complex logic and relies on the Mid-level code to function). Should be in the App/Containers directory.
 
+<a id="Modularity"></a>
 ### Modularity
 
 In Porto, your application business logic lives in `Containers` (same as Modules & Domains & Layers) and interact with other Containers in pre-defined directions.
@@ -110,12 +121,14 @@ In terms of dependency management, the developer is free to move each Container 
 
 Porto benefits from both worlds it applies concepts from the Modular world in the simple Monolithic world.
 
+<a id="Testability"></a>
 ### Testability
 
 Porto supports and encourage writing functional and unit tests. It's structure helps writing tests, and easily know what each test is testing. Porto comes with `tests` folders at the root of each Container mainly for unit tests, and a `functional tests` folder in each UI folder, to test each UI separately.
 
 Following the principles as advised will ensure you have easily testable code, for each piece of code without extra effort.
 
+<a id="Search-ability"></a>
 ### Search-ability
 
 One of the biggest advantages of Porto, is the speed of finding a piece of code in a large code base.
@@ -127,6 +140,7 @@ This allows you to find any Use Case (`Action`) in your code by just browsing th
 
 In Porto you can find any feature implementation in less than 3 seconds! (example: if you are looking for where the user address is being validated - just go to the Address Container, open the list of Actions and search for ValidateUserAddressAction).
 
+<a id="Extensibility"></a>
 ### Extensibility
 
 Porto's takes future growth into consideration and it ensures your code remains maintainable no matter how the project size become. It achieves this by its modular structure, and separation of concerns.
@@ -136,12 +150,11 @@ Porto's takes future growth into consideration and it ensures your code remains 
 <a id="layers"></a>
 # Layers
 
-At its core Porto consists of 2 layers (`Containers` & `Ship`) and set of `Components` with predefined responsibilities.
+At its core Porto consists of 2 layers "folders" `Containers` & `Ship`. 
 
-These Layers (folders) can be created anywhere inside your framework of choice.
+These layers can be created anywhere inside any framework of choice.
 
-*(example: in Laravel PHP you can place them in the `app/` directory or create an `src/` directory on the root)*
-
+*(example: in Laravel PHP you can put them in the `app/` directory or create an `src/` directory on the root)*
 
 The high-level code (Application Business Logic), should be placed in the Container Layer. While the mid-level code should be placed in the Ship Layer.
 
@@ -165,14 +178,18 @@ The Containers (high-level code) relies *indirectly* on the Ship (low-level code
 
 ## Ship Layer:
 
-The Ship layer, contains code and classes to be used by all your Containers Components.
+The Ship layer, contains the Parent "Base" classes *(classes extended by every single component)* and some Utility Code *(helper functions and more)*.
 
-The Ship layer, plays an important role in separating the Application code from the Framework code.
-Thus it facilitates upgrading the Framework without affecting the Application code.
+The Parent classes "Base classes" of Ship layer gives full control over the Container's Components *(for example adding a function to the Base Model class, makes it available in every Model in your Containers).*
 
-In Porto the Ship layer is very slim, it doesn't contain common reusable functionalities such as Authentication or Authorization, all these functionalities live in their own separated Containers.
+The Ship layer, also plays an important role in separating the Application code from the Framework code. Which facilitates upgrading the Framework without affecting the Application code.
 
-The Ship layer can hold two different types of codes. The containers shared code (including all general or common code between the Container) and the Core code (this code contains the logic that autoloads the container components and provide helper functions and more stuff related to the framework itself). It's highly recommended to separate this Core from the actual framework and make it an external package. In order to hide the internal framework magic from the custom Application.
+In Porto the Ship layer is very slim, it does NOT contain common reusable functionalities such as Authentication or Authorization, since all these functionalities are provided by Containers, to be replaced whenever needed.
+
+The Ship layer can hold two different types of code. 
+1) The Containers shared code (including all parent classes, general classes and reusable code).
+2) The Core code (code contains the logic that autoloads the container components). It's highly recommended to separate this Core from the actual framework and make it an external package, in order to hide the internal framework magic from the custom Application code.
+
 
 ### Ship Structure
 
@@ -194,14 +211,14 @@ The Ship Parents holds your custom Application shared business logic, while the 
 
 ## Containers Layer:
 
-The Containers layer is where the Application specific business logic is written *(Application functionalities)*.
+The Containers layer is where the Application specific business logic lives *(Application functionalities)*.
 
 Containers are wrappers of business logic.
 
 Here's an example of how to decide creating Containers.
 *"In a TODO App the Task, User and Calendar... each would be in their own Container, were each has its own Routes, Controllers, Models, Exceptions, etc. And each Container is responsible for receiving requests and returning responses from whichever UI (Web, API..) it supports."*
 
-It's advised to use Single Model per Container, however in some cases you might need more.
+It's advised to use Single Model per Container, however in some cases you may need more.
 Just keep in mind two Models means two Repositories, two Transformers, etc.
 Unless you want to use both Models always together, do split them into 2 Containers.
 
@@ -210,7 +227,7 @@ Unless you want to use both Models always together, do split them into 2 Contain
 
 
 <a id="Containers-Structure"></a>
-### Containers Structure:
+### Basic Containers Structure:
 
 ```
 Container 1
@@ -252,20 +269,45 @@ Container 2
 <a id="Containers-Interactions"></a>
 ### Interactions between Containers
 - A Container MAY depends on one or many other Containers.
-- A Controller MAY run Tasks from another Container.
+- A Controller MAY call Tasks from another Container.
 - A Model MAY have a relationship with a Model from other Containers.
+- Other forms of communications are also possible, such as Listening to Events fired by other Containers.
 
 
 
-Note: If you're not familiar with separating your code into Modules/Domains, or for some reason you don't prefer that approach. You can create your entire Application in a single Container. (Not recommended but possible).
+Note: If you're not familiar with separating your code into Modules/Domains, or for some reason you don't prefer that approach. You can create your entire Application in a single Container. (Not recommended but absolutely possible).
 
+
+<a id="Containers-Sections"></a>
+### Containers Sections
+
+Container `Sections` are another very important aspect in the Porto architecture. 
+
+To avoid having tens of containers on the root of your containers folder, you can group related Containers into Sections.
+
+The basic definition of a Section is a folder that contains related Containers. However the benifits are huge. Think of Sections as bounded context, where each section represents a portion of your system. 
+
+Example: if you're building a racing game like Need for Speed, you may have the following two sections: the Race Section and the Lobby Section, where each section contains a Car Container and a Car Model inside it, but with different properties and functions. 
+In this example the Car Model of the Race section can contain the business logic for accelerating and controlling the car, while the Car Model of the Lobby Section contains the business logic for customizaing the car before the race.
+
+Sections allows separating large Model into smaller ones. And they can provide boundaries for different Models in your system.
+
+If you prefer simplicity or you have only single team working on the project, you can have no Sections at all (where all Containers live in the containers folder) which means your project is a single section. In this case if the project grew quickly and you decided you need to start using sections, you can make a new project also with a single section, this is known as Micro-Services. In Micro-Services each section "project portion" live in its own project (repository) and they can communicate over the network usually using the HTTP protocol.
 
 
 <br>
+
+<a id="Components"></a>
+
+# Components
+
+In the Container layer there's a set of `Components` "Classes" with predefined responsibilities. 
+
+Every single piece of code you write should live in a Component (class function). Porto defines a huge list of those Components for you, with a set guidelines to follow when using them, to keep the development process smooth.
+
+
 <a id="Components-Categories"></a>
-
-# Components Categories
-
+## Components Categories
 
 Every Container consists of a number of Components, in **Porto** the Components are split into two categories:
 `Main Components` and
@@ -274,7 +316,7 @@ Every Container consists of a number of Components, in **Porto** the Components 
 
 
 <a id="Main-Components"></a>
-## Main Components:
+### Main Components:
 
 You must use these Components as they are essential for almost all types of Web Apps:
 
@@ -286,14 +328,14 @@ Routes - Controllers - Requests - Actions - Tasks - Models - Views - Transformer
 
 
 <a id="Components-Interaction-Diagram"></a>
-### Main Components Interaction Diagram
+#### Main Components Interaction Diagram
 
 
 ![](/assets/porto_container_interactions.png)
 
 
 <a id="Request-Life-Cycle"></a>
-### Request Life Cycle
+#### Request Life Cycle
 
 *A typical very basic API call scenario:*
 
@@ -312,7 +354,7 @@ Routes - Controllers - Requests - Actions - Tasks - Models - Views - Transformer
 
 
 <a id="Optional-Components"></a>
-## Optional Components:
+### Optional Components:
 
 You can add these Components when you need them, based on your App needs, however some of them are highly recommended:
 
@@ -534,8 +576,10 @@ Detailed Example: assuming an Action `A1` is calling Task1, Task2 and Task3. And
 
 
 
-<a id="Container-Example"></a>
-## Typical Container Example:
+<a id="Typical-Container-Structure"></a>
+## Typical Container Structure:
+
+
 
 ```
 Container
@@ -596,21 +640,21 @@ Container
 
 <br>
 
-<a id="Projects"></a>
+<a id="Implementations-Projects"></a>
 
-# Projects
+# Implementations
 
 
 > Ready to see the implementions!
 
 - **PHP**
 	- [**apiato**](http://apiato.io/) *(A flawless framework for building scalable and testable API-Centric Apps in PHP.)*
+- **JavaScript**
 - **Python**
-- **Ruby**
 - **Java**
 - **C#**
 
-
+*Submit yours.*
 
 
 <a id="Feedback"></a>
