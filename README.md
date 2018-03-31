@@ -486,8 +486,7 @@ The rule is, whenever you see the possibility of reusing a piece of code from an
 
 #### Principles:
 - Every Task SHOULD have a single responsibility (job).
-- An Action MAY receive and return Data. (Actions SHOULD NOT return a response, the Controller's job is to return a response).
-
+- A Task MAY receive and return Data. (Task SHOULD NOT return a response, the Controller's job is to return a response).
 - A Task SHOULD NOT call another Task. Because that will takes us back to the Services Architecture and it's a big mess.
 - A Task SHOULD NOT call an Action. Because your code wouldn't make any logical sense then!
 - Tasks SHOULD only be called from Actions. (They could be called from Actions of other Containers as well!).
