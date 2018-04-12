@@ -661,9 +661,9 @@ Container
 
 **Your feedback helps.**
 
-For feedbacks, questions or suggestions? We are on [**Slack**](https://now-examples-slackin-bvfqosqozk.now.sh/).
+For feedbacks, questions or suggestions? We are on [**Slack**](https://slackin-mezlsumyvc.now.sh/).
 
-[![](https://s19.postimg.org/h7pvzy9ar/Slack-i_OS-icon.png)](https://now-examples-slackin-bvfqosqozk.now.sh)
+[![](https://s19.postimg.org/h7pvzy9ar/Slack-i_OS-icon.png)](https://slackin-mezlsumyvc.now.sh/)
 
 
 
