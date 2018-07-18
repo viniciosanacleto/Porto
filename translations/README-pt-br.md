@@ -80,7 +80,7 @@ Feedbacks & Contribuições são bem vindas e creditadas.
 - Nomeação de classes utilizando o dominios especialistas "components".
 - Fluxo de trabalho limpo com fluxo de dados predefinido e direção de dependencias.
 - Código base organizado sem dissociação de código.
-- Fácil de entender por qualquer desenvolvedor (não é magia, é técnologia).
+- Fácil de entender por qualquer desenvolvedor (não é magia, é tecnologia).
 
 <a id="Porto-Benefits"></a>
 ## Porto Benefits:
