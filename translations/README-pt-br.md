@@ -42,13 +42,13 @@
 <a id="Introduction"></a>
 # Introdução
 
-**Porto SAP** é uma moderna Arquitetura de Software, planejada para ajudar os desenvolvedores a organizar o código da aplicação de uma maneira mais sustentável. Sua principal característica é conseguir organizar as regras de negócio de maneira reutilizável.
+**Porto SAP** é uma moderna Arquitetura de Software, planejada para ajudar os desenvolvedores a organizar o código da aplicação de uma maneira mais sustentável. Sua principal característica é conseguir organizar as lógicas do negócio de maneira reutilizável.
 
 Porto é uma ótima alternativa ao padrão MVC, tanto para aplicações de grande porte, como para as aplicações que tem tendência a ficarem muito complexas no futuro.
 
 O Porto herda conceitos de arquitetura MVC, DDD, ADR, princípio Modular e de Camadas. Além disso, implementa muitos princípios de design como SOLID, OOP, LIFT, DRY, CoC, GRASP, Generalização, Alta Coesão e Acoplamento Fraco.
 
-O Porto começou como uma arquitetura experimental, tentando resolver problemas comuns no desenvolvimento de aplicações de médio e grande porte. Enquanto as arquiteturas modulares focam na reusabilidade das funcionalidades gerais do framework, o Porto foca na reusabilidade das regras de negócio.
+O Porto começou como uma arquitetura experimental, tentando resolver problemas comuns no desenvolvimento de aplicações de médio e grande porte. Enquanto as arquiteturas modulares focam na reusabilidade das funcionalidades gerais do framework, o Porto foca na reusabilidade da lógica de negócio.
 
 
 > "Simplicidade é um pré-requisito para a confiabilidade.” — Edsger Dijkstra  
@@ -62,25 +62,25 @@ Feedbacks & Contribuições são bem vindas e creditadas.
 
 
 <a id="Quality-Attributes"></a>
-## Quality Attributes:
+## Qualidades:
 
-#### Advantages of using Porto:
+#### Vantagens de usar Porto:
 
-- Reusability of business logic (Containers) across multiple similar projects.
-- Easy to maintain and test (quickly modify existing features and debug your code).
-- Zero technical debt (low communication between developers).
-- Pluggable optional UI's in each Container, (start with Web App now and build an API later, or the opposite).
-- Decoupled code (editing X doesn’t break Y).
-- Separated business logic in multiple Container.
-- Scalable code (easy to modify and implement new features).
-- Easy framework upgrade (complete separation between the App and the framework via the Ship layer).
-- Easy to locate any feature/functionality. And to understand what's happening inside it.
-- Organized coupling between the internal classes "Components".
-- Slim classes "treating classes as functions" (extremely adhering to the single responsibility principle).
-- Uses the domain expert language when naming the classes "components".
-- Clear development workflow with predefined data flow and dependencies direction.
-- Very organized code base with zero code decoupling.
-- Easy to understand by any developer (no magic).
+- Reusabilidade da lógica de negócio (Containers) por projetos similares.
+- Fácil manutenção e testes (rapidez na modificação de features e debugação do código).
+- Zero dívida técnica (pouca necessidade de comunicação entre desenvolvedores).
+- UIs plugáveis em cada Container, (comece com uma aplicação Web e contrua uma API depois, ou o vice-versa).
+- Baixa acoplagem de código (para editar X não precisa parar Y).
+- Lógica de negócio separada em vários containers.
+- Código escalável (fácil de modificar ou implementar novas features).
+- Fácil upgrade de framework (separação completa entre Aplicação e framework através da camada Ship).
+- Fácil de localizar uma feature/funcionalidade e entender o seu funcionamento.
+- Acoplamento entre classes internas organizado "Components".
+- Classes Slim "tratamento de classes como funções" (extremamente condizente com o princípio de responsabilidade única).
+- Nomeação de classes utilizando o dominios especialistas "components".
+- Fluxo de trabalho limpo com fluxo de dados predefinido e direção de dependencias.
+- Código base organizado sem dissociação de código.
+- Fácil de entender por qualquer desenvolvedor (não é magia, é técnologia).
 
 <a id="Porto-Benefits"></a>
 ## Porto Benefits:
