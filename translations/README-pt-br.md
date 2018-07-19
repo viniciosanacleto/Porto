@@ -83,28 +83,27 @@ Feedbacks & Contribuições são bem vindas e creditadas.
 - Fácil de entender por qualquer desenvolvedor (não é magia, é tecnologia).
 
 <a id="Porto-Benefits"></a>
-## Porto Benefits:
+## Benefícios do Porto:
 
 <a id="Decoupling"></a>
-### Decoupling
+### Desacoplagem
 
-Separation of concerns, is an important principle Porto adheres to. 
+Separação de interesses, é um conceito importante que o Porto aderiu.
 
-Thus the application code is separated from the framework code. 
+Portanto o código da aplicação é separado do código do framework. 
 
-The business logic is wrapped in different Containers. And Containers are groupped into Sections *(each Section contains a portion of your application business logic)*. 
+A lógica do negócio é inserida em diferentes Containers. Containers são agrupados em Seções (Sections) *(cada Seção possui uma parte da sua lógica de negócio)*. 
 
-Containers are separated from the infrastructure code (Parent classes and Utility Code), within the Application itself. *The infrastructure logic lives in the Ship layer far from the Cointainer Layer which can contain Containers at its root or can group related Containers into Sections.*
+Containers são separados do código da infraestrutura (Classes Pais (Parents) e Códigos Utilitários), estão dentro da Aplicação propriamente dito. *A lógica de infraestrutura fica na camada Ship separado da camada de Container que pode conter Containers na raiz ou grupos separados em Seções (Sections)*
 
-The UI's (user interfaces) are separated from the application business logic and separated from each others within each Container.
+As UIs (interfaces de usuário) são separadas da lógica de negócio e separadas entre si dentro de um mesmo Container.
 
-Making the UI's (`WEB`, `API` & `CLI`) pluggable, allows writting the business logic of your application first, then implement a UI to interact with your code. It also gives flexibility to supporting interfaces when needed (example: start with Web interface then open an API later), with the least effort possible. This is all possible because the `Actions` are the central organizing principle "not the controller" which are shared across multiple UI's.
+Fazendo as UIs (`WEB`, `API` & `CLI`) plugáveis, permite-se a escrita da lógica da sua aplicação em um primeiro momento, e depois a implementação da UI para interagir com o código. Também é possível a criação de interfaces por demanda (exemplo: começar com uma interface Web e depois criar uma API) com o mínimo de esforço possível. Isto se dá pelas `Actions` como organizadoras centrais (e não os Controllers) podendo ser compartilhadas por múltiplas UIs ao mesmo tempo.
 
-
-##### Code Levels:
-- **Low-level code**: the framework code (implements basic operations like reading files from a disk, or interacting with a database). Usually lives in the Vendor directory. 
-- **Mid-level code**: the application general code (implements functionality that serves the High-level code. And it relies on the Low-level code to function). Should be in the App/Ship directory.
-- **High-level code**: the business logic code (encapsulates complex logic and relies on the Mid-level code to function). Should be in the App/Containers directory.
+##### Níveis de Código:
+- **Baixo nível**: o código do framework (implementa operações básicas como ler dados do disco, ou interagir com o banco de dados). Normalmente localizado no diretório Vendor.
+- **Médio nível**: o código geral da aplicação (implementa funcionalidades que servem ao código de Alto nível e depende de funções do código de Baixo nível). Deve estar localizado no diretório App/Ship.
+- **Alto nível**: o código da lógica de negócio (encapsula lógicas complexas e depende do código de Médio nível). Deve estar localizado no diretório App/Containers.
 
 <a id="Modularity"></a>
 ### Modularity
