@@ -106,18 +106,18 @@ Fazendo as UIs (`WEB`, `API` & `CLI`) plugáveis, permite-se a escrita da lógic
 - **Alto nível**: o código da lógica de negócio (encapsula lógicas complexas e depende do código de Médio nível). Deve estar localizado no diretório App/Containers.
 
 <a id="Modularity"></a>
-### Modularity
+### Modularidade
 
-In Porto, your application business logic lives in `Containers` (same as Modules & Domains & Layers) and interact with other Containers in pre-defined directions.
+No Porto, a lógica de négocio da sua aplicação vive nos `Containers` (mesmo que Módulos & Dominios & Camadas) e interagem com outros Containers de maneiras predefinidas.
 
-In Porto, Containers are similar in concept to Modules *(from a Modular architecture)*.
-However, Containers in Porto do cross the boundaries of a Module, due to the fact that they contain business logic which by nature involves a lot of dependencies and communications.
+No Porto, Containers são similares ao conceito de Módulos *(da arquitetura Modular)*.
+Entretanto, Containers no Porto extrapolam os limites de um Módulo, devido ao fato de que eles contêm lógica de negócio que por natureza envolvem muitas dependencias e comunicações.
 
-At the core, Models have relationships with Models from different Containers. And Actions can call Tasks and SubActions from other Containers. It's the responsibility of the developer to minimize the relationships between the Containers, while Porto's rules and guidelines will help achieving that.
+Em suma, Models tem relações com Models de diferentes Containers. E Actions podem chamar Tasks e SubActions de outros Containers. É responsabilidade do desenvolvedor minimizar as relações entre Containers, enquanto as regras do Porto e suas linhas guia ajudarão a alcançar isso.
 
-In terms of dependency management, the developer is free to move each Container to its own repository or keep all Containers together under single management.
+Em termos de gestão de dependencias, o desenvolvedor tem livre arbítrio para decidir mover cada Container para um respositório ou manter todos em um único lugar.
 
-Porto benefits from both worlds it applies concepts from the Modular world in the simple Monolithic world.
+O Porto é a junção do melhor de dois mundos, aplicando conceitos do mundo Modular e do mundo Monolítico.
 
 <a id="Testability"></a>
 ### Testability
